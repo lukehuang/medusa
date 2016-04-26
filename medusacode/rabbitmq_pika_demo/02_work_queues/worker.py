@@ -27,7 +27,7 @@ qd = channel.queue_declare(
     queue=QUEUE_NAME,
     durable=True,  # make the queue durable (survive reboots of the broker)
 )
-print qd  # <METHOD(['channel_number=1', 'frame_type=1', "method=<Queue.DeclareOk(['consumer_count=0', 'message_count=0', 'queue=queue_test'])>"])>
+print qd  # <METHOD(['channel_number=1', 'frame_type=1', "method=<Queue.DeclareOk(['consumer_count=0', 'message_count=0', 'queue=task_queue'])>"])>
 print '----------------------------------------------------------------------------------------------------'
 """
 Use the basic.qos method with the prefetch_count=1 setting.

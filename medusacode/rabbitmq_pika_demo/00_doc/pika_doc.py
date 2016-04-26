@@ -96,4 +96,24 @@ Channel.basic_qos(callback=None, prefetch_size=0, prefetch_count=0, all_channels
         all_channels (bool) – Should the QoS apply to all channels
 """
 
+"""
+Channel.exchange_declare(callback=None, exchange=None, exchange_type='direct', passive=False, durable=False, auto_delete=False, internal=False, nowait=False, arguments=None, type=None)
+    This method creates an exchange if it does not already exist,
+    and if the exchange exists, verifies that it is of the correct and expected class.
+    If passive set, the server will reply with Declare-Ok
+    if the exchange already exists with the same name, and raise an error
+    if the exchange does not already exist, the server MUST raise a channel exception with reply code 404 (not found).
+    Parameters:
+        callback (method) – Call this method on Exchange.DeclareOk
+        exchange (str or unicode sequence of these characters: letters, digits, hyphen, underscore, period, or colon.)
+            – The exchange name consists of a non-empty
+        exchange_type (str) – The exchange type to use
+        passive (bool) – Perform a declare or just check to see if it exists
+        durable (bool) – Survive a reboot of RabbitMQ
+        auto_delete (bool) – Remove when no more queues are bound to it
+        internal (bool) – Can only be published to by other exchanges
+        nowait (bool) – Do not expect an Exchange.DeclareOk response
+        arguments (dict) – Custom key/value pair arguments for the exchange
+        type (str) – The deprecated exchange type parameter
+"""
 
