@@ -147,6 +147,8 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'medusaweb.spider',
+    'djcelery',
+    'celeryapp',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -171,3 +173,19 @@ LOGGING = {
         },
     }
 }
+
+# ----------------------------------------------------------------------------------------------------
+# Configure Django project to use Celery
+
+# [1] RabbitMQ as broker
+BROKER_URL = 'amqp://celery_user:celery_password@192.168.100.100:5672/celery_vhost'
+
+# [2] redis as broker
+# BROKER_URL = 'redis://192.168.100.100:6379/0'
+
+# result_backend
+CELERY_RESULT_BACKEND = 'redis://192.168.100.100:6379/1'
+
+import djcelery
+djcelery.setup_loader()
+# ----------------------------------------------------------------------------------------------------
