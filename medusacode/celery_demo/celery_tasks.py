@@ -5,6 +5,13 @@
 run as celery worker:
 celery -A celery_tasks worker --loglevel=info
 """
+"""
+run celery flower(a web based tool for monitoring and administrating Celery clusters):
+celery -A celery_tasks flower --port=5555 --broker=amqp://celery_user:celery_password@192.168.100.100:5672/celery_vhost
+
+run celery events(a command line tool for monitoring and administrating Celery clusters):
+celery -A celery_tasks events
+"""
 
 import datetime
 import time

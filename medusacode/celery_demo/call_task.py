@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # coding:utf-8
 
+"""
+call celery tasks
+"""
+
 import random
 
 from celery_tasks import func
