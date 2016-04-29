@@ -26,14 +26,15 @@ def test(tries):
 @timeit
 def calc_pi(tries, n):
     # ------------------------------------------------------------------------------------------
-    from gevent.pool import Pool
-    pool = Pool()
-    result = pool.imap(test, [tries]*n)  # gevent
+    import gevent
+    jobs = [gevent.spawn(test, t) for t in [tries] * n]
+    gevent.joinall(jobs)
+    result = [job.value for job in jobs]  # gevent
     # ------------------------------------------------------------------------------------------
     pi = 4.0 * sum(result)/(tries * n)
     return pi
 
 pi = calc_pi(1000000, 10)
 print 'pi = %s' % pi
-# delta = 3.71250200272
-# pi = 3.1419572
+# delta = 3.71877408028
+# pi = 3.141468
