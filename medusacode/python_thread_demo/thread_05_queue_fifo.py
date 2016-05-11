@@ -65,6 +65,9 @@ def read(queue):
     pass
 
 def main():
+    """
+    Constructor for a FIFO queue.
+    """
     thread_queue = Queue.Queue()
     th1 = WriteThread('1', "Thread-1", thread_queue)
     th2 = ReadThread('2', "Thread-2", thread_queue)

@@ -67,6 +67,12 @@ def read(queue):
 def main():
     # thread_queue = Queue.Queue()
     # thread_queue = Queue.LifoQueue()
+    """
+    Constructor for a priority queue.
+    The lowest valued entries are retrieved first
+    (the lowest valued entry is the one returned by sorted(list(entries))[0]).
+    A typical pattern for entries is a tuple in the form: (priority_number, data).
+    """
     thread_queue = Queue.PriorityQueue()
     th1 = WriteThread('1', "Thread-1", thread_queue)
     th2 = ReadThread('2', "Thread-2", thread_queue)
