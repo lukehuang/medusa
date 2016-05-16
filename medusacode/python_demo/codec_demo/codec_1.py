@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # coding=utf-8
 
+"""
+Python 做编码转换的时候，会借助于内部的编码，转换过程是这样的:
+    原有编码 -> 内部编码(unicode) -> 目的编码
+"""
 
 def info(var):
     print var, type(var)
