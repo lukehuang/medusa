@@ -39,13 +39,28 @@ print s1.symmetric_difference(s2)
 # set(['A', 'B'])
 # set(['A', 'B', 'G', 'F'])
 print '--------------------------------------------------------------------------------------------------'
+"""
+namedtuple
+    Any tuple-like class whose indexable elements are also accessible using named attributes.
+    (for example, time.localtime() returns a tuple-like object
+    where the year is accessible either with an index such as t[0] or with a named attribute like t.tm_year)
+"""
 # collections.namedtuple
 # factory function for creating tuple subclasses with named fields
 import collections
 lightObject = collections.namedtuple('typename_lightObject', ['name', 'age'])
 person = lightObject(name='omoplata', age=30)
+
+print person
+# typename_lightObject(name='omoplata', age=30)
+
 print person.name
 print person.age
+# omoplata
+# 30
+
+print person[0]
+print person[1]
 # omoplata
 # 30
 print '--------------------------------------------------------------------------------------------------'
