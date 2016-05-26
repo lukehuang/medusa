@@ -28,9 +28,12 @@ class A(object):
         fdel is a function for deleting an attribute value.
         And doc creates a docstring for the attribute.
     If c is an instance of C,
-        c.x will invoke the getter,
-        c.x = value will invoke the setter,
-        del c.x will invoke the deleter.
+        c.x
+            will invoke the getter,
+        c.x = value
+            will invoke the setter,
+        del c.x
+            will invoke the deleter.
     """
     x = property(fget=getx, fset=setx, fdel=delx, doc='I am the "x" property')
 # -------------------------------------------------------------------------------------------------------
@@ -45,6 +48,7 @@ class B(object):
 
     @property
     def x(self):
+        print '(getter)'
         return self._x
 
     # @x.getter
@@ -52,6 +56,7 @@ class B(object):
     #     """
     #     Be sure to give the additional functions the same name as the original property (x in this case.)
     #     """
+    #     print '(getter)'
     #     return self._x
 
     @x.setter
@@ -59,6 +64,7 @@ class B(object):
         """
         Be sure to give the additional functions the same name as the original property (x in this case.)
         """
+        print '(setter)'
         self._x = value
 
     @x.deleter
@@ -66,5 +72,21 @@ class B(object):
         """
         Be sure to give the additional functions the same name as the original property (x in this case.)
         """
+        print '(deleter)'
         del self._x
+# -------------------------------------------------------------------------------------------------------
+a = A(9)
+
+a.x
+a.x = 99
+del a.x
+# -------------------------------------------------------------------------------------------------------
+b = B(9)
+
+b.x
+# (getter)
+b.x = 99
+# (setter)
+del b.x
+# (deleter)
 # -------------------------------------------------------------------------------------------------------
