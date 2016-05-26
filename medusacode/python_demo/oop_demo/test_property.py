@@ -36,6 +36,11 @@ class A(object):
             will invoke the deleter.
     """
     x = property(fget=getx, fset=setx, fdel=delx, doc='I am the "x" property')
+
+    print property, type(property)
+    # <type 'property'> <type 'type'>
+    print x, type(x)
+    # <property object at 0x1060bae68> <type 'property'>
 # -------------------------------------------------------------------------------------------------------
 class B(object):
     """
