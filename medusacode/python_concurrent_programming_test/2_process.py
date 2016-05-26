@@ -8,6 +8,8 @@
 from math import hypot
 from random import random
 import time
+import os
+import thread
 
 def timeit(func):
     def wrapper(*args, **kwargs):
@@ -20,6 +22,7 @@ def timeit(func):
     return wrapper
 
 def test(tries):
+    print '[process: %s][thread: %s]' % (os.getpid(), thread.get_ident())
     return sum(hypot(random(), random()) < 1 for _ in range(tries))
 
 
