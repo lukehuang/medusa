@@ -5,12 +5,39 @@
 descriptor
 """
 """
+definition(short version):
+    Descriptors are objects with any of __get__, __set__, or __delete__.
+    These descriptor objects can be used as attributes on other object class definitions.
+
 definition:
     In general, a descriptor is an object attribute with "binding behavior",
     one whose attribute access has been overridden by methods in the descriptor protocol.
     Those methods are __get__(), __set__(), and __delete__().
     If any of those methods are defined for an object, it is said to be a descriptor.
+"""
+"""
+What Are Descriptors?
 
+    A descriptor is an object with any of the following methods (__get__, __set__, or __delete__),
+    intended to be used via dotted-lookup as if it were a typical attribute of an instance.
+    For an owner-object, [obj_instance], with a [descriptor] object:
+
+        descriptor.__get__(self, obj_instance, owner_class) (returning a value)
+        is invoked by
+        obj_instance.descriptor
+
+        descriptor.__set__(self, obj_instance, value) (returning None)
+        is invoked by
+        obj_instance.descriptor = value
+
+        descriptor.__delete__(self, obj_instance) (returning None)
+        is invoked by
+        del obj_instance.descriptor
+
+    obj_instance is the instance whose class contains the descriptor object's instance.
+    self is the instance of the descriptor (probably just one for the class of the obj_instance)
+"""
+"""
 定义:
     descriptor 是实现了__get__(), __set__(), __delete__()方法的类的实例(对象)。
     任何实现 __get__，__set__，__delete__ 方法中一至多个的类的对象，都是 descriptor 对象。
