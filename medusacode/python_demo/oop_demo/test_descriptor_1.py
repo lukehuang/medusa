@@ -69,8 +69,8 @@ class NonNegative(object):
         pass
 
     def __get__(self, instance, owner):
-        print '(descriptor get)(instance = %s)(owner = %s) %s' % (instance, owner, self.dict[instance])
-        return self.dict[instance]
+        print '(descriptor get)(instance = %s)(owner = %s) %s' % (instance, owner, self.dict[instance] if instance else None)
+        return self.dict[instance] if instance else None
 
     def __set__(self, instance, value):
         print '(descriptor set)(instance = %s)(value = %s)' % (instance, value)
@@ -78,14 +78,14 @@ class NonNegative(object):
             raise ValueError('value can not be negative')
         self.dict[instance] = value
 
-class Score(object):
+class Math(object):
     """
     NonNegative 实例
     是完全通过类属性模拟实例属性，
     因此实例属性其实根本不存在。
     """
-    score = NonNegative()  # descriptor 对象
-    pid = NonNegative()  # descriptor 对象
+    score = NonNegative()  # descriptor 对象(Math的类属性)
+    pid = NonNegative()  # descriptor 对象(Math的类属性)
 
     def __init__(self, pid, score):
         """
@@ -101,25 +101,33 @@ class Score(object):
             print 'FAIL'
 
 print '-------------------------------------------------------------------------------------------------------'
-s1 = Score(1, 90)
-# (descriptor set)(instance = <__main__.Score object at 0x10b63dc50>)(value = 1)
-# (descriptor set)(instance = <__main__.Score object at 0x10b63dc50>)(value = 90)
+print Math.score
+# (descriptor get)(instance = None)(owner = <class '__main__.Math'>) None
+# None
+
+print Math.pid
+# (descriptor get)(instance = None)(owner = <class '__main__.Math'>) None
+# None
+print '-------------------------------------------------------------------------------------------------------'
+s1 = Math(1, 90)
+# (descriptor set)(instance = <__main__.Math object at 0x103515c50>)(value = 1)
+# (descriptor set)(instance = <__main__.Math object at 0x103515c50>)(value = 90)
 
 s1.score
-# (descriptor get)(instance = <__main__.Score object at 0x10b63dc50>)(owner = <class '__main__.Score'>) 90
+# (descriptor get)(instance = <__main__.Math object at 0x103515c50>)(owner = <class '__main__.Math'>) 90
 
 s1.score = 61
-# (descriptor set)(instance = <__main__.Score object at 0x10b63dc50>)(value = 61)
+# (descriptor set)(instance = <__main__.Math object at 0x103515c50>)(value = 61)
 
 s1.check()
-# (descriptor get)(instance = <__main__.Score object at 0x10b63dc50>)(owner = <class '__main__.Score'>) 61
+# (descriptor get)(instance = <__main__.Math object at 0x103515c50>)(owner = <class '__main__.Math'>) 61
 # PASS
 
 s1.score = 59
-# (descriptor set)(instance = <__main__.Score object at 0x10b63dc50>)(value = 59)
+# (descriptor set)(instance = <__main__.Math object at 0x103515c50>)(value = 59)
 
 s1.check()
-# (descriptor get)(instance = <__main__.Score object at 0x10b63dc50>)(owner = <class '__main__.Score'>) 59
+# (descriptor get)(instance = <__main__.Math object at 0x103515c50>)(owner = <class '__main__.Math'>) 59
 # FAIL
 print '-------------------------------------------------------------------------------------------------------'
 print '-------------------------------------------------------------------------------------------------------'
