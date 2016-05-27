@@ -34,9 +34,15 @@ print '-------------------------------------------------------------------------
 class A(object):
     va = 'ABCDE'
 
+    # [1]
+    # def __getattribute__(self, item):
+    #     print '(A.__getattribute__)'
+    #     return object.__getattribute__(self, item)
+
+    # [2]
     def __getattribute__(self, item):
         print '(A.__getattribute__)'
-        return object.__getattribute__(self, item)
+        return super(A, self).__getattribute__(item)
 
     def __getattr__(self, item):
         print '(A.__getattr__) : [%s from A.__getattr__]' % item
