@@ -62,18 +62,18 @@ Descriptor Protocol
     To make a read-only data descriptor, define both __get__() and __set__() with the __set__() raising an AttributeError when called.
     Defining the __set__() method with an exception raising placeholder is enough to make it a data descriptor.
 """
-# -------------------------------------------------------------------------------------------------------
+print '-------------------------------------------------------------------------------------------------------'
 class NonNegative(object):
     def __init__(self):
         self.dict = dict()
         pass
 
     def __get__(self, instance, owner):
-        print '(descriptor get) %s' % self.dict[instance]
+        print '(descriptor get)(instance = %s)(owner = %s) %s' % (instance, owner, self.dict[instance])
         return self.dict[instance]
 
     def __set__(self, instance, value):
-        print '(descriptor set) %s' % value
+        print '(descriptor set)(instance = %s)(value = %s)' % (instance, value)
         if value < 0:
             raise ValueError('value can not be negative')
         self.dict[instance] = value
@@ -100,25 +100,26 @@ class Score(object):
         else:
             print 'FAIL'
 
-# -------------------------------------------------------------------------------------------------------
+print '-------------------------------------------------------------------------------------------------------'
 s1 = Score(1, 90)
-# (descriptor set) 1
-# (descriptor set) 90
+# (descriptor set)(instance = <__main__.Score object at 0x10b63dc50>)(value = 1)
+# (descriptor set)(instance = <__main__.Score object at 0x10b63dc50>)(value = 90)
 
 s1.score
-# (descriptor get) 90
+# (descriptor get)(instance = <__main__.Score object at 0x10b63dc50>)(owner = <class '__main__.Score'>) 90
 
 s1.score = 61
-# (descriptor set) 61
+# (descriptor set)(instance = <__main__.Score object at 0x10b63dc50>)(value = 61)
 
 s1.check()
-# (descriptor get) 61
+# (descriptor get)(instance = <__main__.Score object at 0x10b63dc50>)(owner = <class '__main__.Score'>) 61
 # PASS
 
 s1.score = 59
-# (descriptor set) 59
+# (descriptor set)(instance = <__main__.Score object at 0x10b63dc50>)(value = 59)
 
 s1.check()
-# (descriptor get) 59
+# (descriptor get)(instance = <__main__.Score object at 0x10b63dc50>)(owner = <class '__main__.Score'>) 59
 # FAIL
-# -------------------------------------------------------------------------------------------------------
+print '-------------------------------------------------------------------------------------------------------'
+print '-------------------------------------------------------------------------------------------------------'
