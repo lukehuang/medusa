@@ -91,6 +91,9 @@ class Math(object):
         """
         通过在 __init__() 内直接调用类属性,实现对实例属性初始化赋值的模拟.
         """
+        """
+        这里并未创建实例属性 pid 和 score, 而是调用类属性 Math.pid 和 Math.score
+        """
         self.pid = pid
         self.score = score
 
@@ -110,24 +113,41 @@ print Math.pid
 # None
 print '-------------------------------------------------------------------------------------------------------'
 s1 = Math(1, 90)
-# (descriptor set)(instance = <__main__.Math object at 0x103515c50>)(value = 1)
-# (descriptor set)(instance = <__main__.Math object at 0x103515c50>)(value = 90)
+# (descriptor set)(instance = <__main__.Math object at 0x10f177c10>)(value = 1)
+# (descriptor set)(instance = <__main__.Math object at 0x10f177c10>)(value = 90)
 
 s1.score
-# (descriptor get)(instance = <__main__.Math object at 0x103515c50>)(owner = <class '__main__.Math'>) 90
+# (descriptor get)(instance = <__main__.Math object at 0x10f177c10>)(owner = <class '__main__.Math'>) 90
 
 s1.score = 61
-# (descriptor set)(instance = <__main__.Math object at 0x103515c50>)(value = 61)
+# (descriptor set)(instance = <__main__.Math object at 0x10f177c10>)(value = 61)
 
 s1.check()
-# (descriptor get)(instance = <__main__.Math object at 0x103515c50>)(owner = <class '__main__.Math'>) 61
+# (descriptor get)(instance = <__main__.Math object at 0x10f177c10>)(owner = <class '__main__.Math'>) 61
 # PASS
 
 s1.score = 59
-# (descriptor set)(instance = <__main__.Math object at 0x103515c50>)(value = 59)
+# (descriptor set)(instance = <__main__.Math object at 0x10f177c10>)(value = 59)
 
 s1.check()
-# (descriptor get)(instance = <__main__.Math object at 0x103515c50>)(owner = <class '__main__.Math'>) 59
+# (descriptor get)(instance = <__main__.Math object at 0x10f177c10>)(owner = <class '__main__.Math'>) 59
 # FAIL
 print '-------------------------------------------------------------------------------------------------------'
+s2 = Math(2, 59)
+# (descriptor set)(instance = <__main__.Math object at 0x10f177c50>)(value = 2)
+# (descriptor set)(instance = <__main__.Math object at 0x10f177c50>)(value = 59)
+
+s2.score = 50
+# (descriptor set)(instance = <__main__.Math object at 0x10f177c50>)(value = 50)
+
+s2.check()
+# (descriptor get)(instance = <__main__.Math object at 0x10f177c50>)(owner = <class '__main__.Math'>) 50
+# FAIL
+
+s2.score = 99
+# (descriptor set)(instance = <__main__.Math object at 0x10f177c50>)(value = 99)
+
+s2.check()
+# (descriptor get)(instance = <__main__.Math object at 0x10f177c50>)(owner = <class '__main__.Math'>) 99
+# PASS
 print '-------------------------------------------------------------------------------------------------------'
