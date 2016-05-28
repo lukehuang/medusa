@@ -70,17 +70,20 @@ print '-------------------------------------------------------------------------
 import collections
 dd = collections.defaultdict(list)
 print type(dd), dd
+# <type 'collections.defaultdict'> defaultdict(<type 'list'>, {})
+
 print dd['key1']
 print dd
-print dd['key2']
-print dd
-dd['key1'].append('value1')
-print dd
-# <type 'collections.defaultdict'> defaultdict(<type 'list'>, {})
 # []
 # defaultdict(<type 'list'>, {'key1': []})
+
+print dd['key2']
+print dd
 # []
 # defaultdict(<type 'list'>, {'key2': [], 'key1': []})
+
+dd['key1'].append('value1')
+print dd
 # defaultdict(<type 'list'>, {'key2': [], 'key1': ['value1']})
 print '--------------------------------------------------------------------------------------------------'
 # collections.Counter
@@ -89,17 +92,21 @@ import collections
 l = ['A', 'B', 'B', 'C', 'C', 'C', 'D', 'D', 'D', 'D']
 c = collections.Counter(l)
 print type(c), c
+# <class 'collections.Counter'> Counter({'D': 4, 'C': 3, 'B': 2, 'A': 1})
+
 print c['A']
 print c['Z']
+# 1
+# 0
+
 print c.elements()
+# <itertools.chain object at 0x1002817d0>
+
 for e in c.elements():
     print e
     pass
+
 print c.most_common(3)
-# <class 'collections.Counter'> Counter({'D': 4, 'C': 3, 'B': 2, 'A': 1})
-# 1
-# 0
-# <itertools.chain object at 0x1002817d0>
 # [('D', 4), ('C', 3), ('B', 2)]
 print '--------------------------------------------------------------------------------------------------'
 # collections.deque
@@ -109,18 +116,22 @@ import collections
 l = ['A', 'B', 'C', 'D', 'E']
 dq = collections.deque(l)
 print type(dq), dq
+# <type 'collections.deque'> deque(['A', 'B', 'C', 'D', 'E'])
+
 dq.appendleft('LEFT')
 print dq
+# deque(['LEFT', 'A', 'B', 'C', 'D', 'E'])
+
 dq.extendleft(['LA', 'LB', 'LC'])
 print dq
+# deque(['LC', 'LB', 'LA', 'LEFT', 'A', 'B', 'C', 'D', 'E'])
+
 dq.rotate(5)
 print dq
+# deque(['A', 'B', 'C', 'D', 'E', 'LC', 'LB', 'LA', 'LEFT'])
+
 dq.reverse()
 print dq
-# <type 'collections.deque'> deque(['A', 'B', 'C', 'D', 'E'])
-# deque(['LEFT', 'A', 'B', 'C', 'D', 'E'])
-# deque(['LC', 'LB', 'LA', 'LEFT', 'A', 'B', 'C', 'D', 'E'])
-# deque(['A', 'B', 'C', 'D', 'E', 'LC', 'LB', 'LA', 'LEFT'])
 # deque(['LEFT', 'LA', 'LB', 'LC', 'E', 'D', 'C', 'B', 'A'])
 print '--------------------------------------------------------------------------------------------------'
 # collections.OrderedDict
