@@ -60,28 +60,45 @@ functools.partial(func[,*args][, **keywords])
     >>> basetwo('10010')
     18
 """
+"""
+partial objects
+    partial objects are callable objects created by partial().
+    They have three read-only attributes:
+        partial.func
+            A callable object or function. Calls to the partial object will be forwarded to func with new arguments and keywords.
+        partial.args
+            The leftmost positional arguments that will be prepended to the positional arguments provided to a partial object call.
+        partial.keywords
+            The keyword arguments that will be supplied when the partial object is called.
+
+    partial objects are like function objects in that they are callable, weak referencable, and can have attributes.
+    There are some important differences.
+        For instance, the __name__ and __doc__ attributes are not created automatically.
+        Also, partial objects defined in classes behave like static methods
+        and do not transform into bound methods during instance attribute look-up.
+"""
 print '--------------------------------------------------------------------------------------------------'
-def func(*args, **kwargs):
+def my_function(*args, **kwargs):
     print args
     print kwargs
     return args, kwargs
 
-ret = func(1, 2, 3, a=11, b=22, c=33)
+ret = my_function(1, 2, 3, a=11, b=22, c=33)
 # (1, 2, 3)
 # {'a': 11, 'c': 33, 'b': 22}
 print ret
 # ((1, 2, 3), {'a': 11, 'c': 33, 'b': 22})
 
-func_partial = functools.partial(func, 9, x=99)
-ret_partial = func_partial(1, 2, 3, a=11, b=22, c=33)
+function_partial = functools.partial(my_function, 9, x=99)
+ret_partial = function_partial(1, 2, 3, a=11, b=22, c=33)
 # (9, 1, 2, 3)
 # {'x': 99, 'a': 11, 'c': 33, 'b': 22}
 print ret_partial
 # ((9, 1, 2, 3), {'x': 99, 'a': 11, 'c': 33, 'b': 22})
 
-print func_partial.func  # <function func at 0x1097bf938>
-print func_partial.args  # (9,)
-print func_partial.keywords  # {'x': 99}
+print function_partial.func  # <function my_function at 0x1097bf938>
+print function_partial.args  # (9,)
+print function_partial.keywords  # {'x': 99}
 print '--------------------------------------------------------------------------------------------------'
 
 
