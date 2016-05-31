@@ -10,12 +10,13 @@ functools — Higher-order functions and operations on callable objects
 import functools
 
 
+print '--------------------------------------------------------------------------------------------------'
 """
 functools.reduce(function, iterable[, initializer])
     This is the same function as reduce().
     It is made available in this module to allow writing code more forward-compatible with Python 3.
 """
-print '--------------------------------------------------------------------------------------------------'
+
 def func_reduce(x, y):
     return x+y
 
@@ -29,7 +30,6 @@ print ll
 print lll
 # 115
 print '--------------------------------------------------------------------------------------------------'
-
 
 """
 functools.partial(func[,*args][, **keywords])
@@ -77,7 +77,7 @@ partial objects
         Also, partial objects defined in classes behave like static methods
         and do not transform into bound methods during instance attribute look-up.
 """
-print '--------------------------------------------------------------------------------------------------'
+
 def my_function(*args, **kwargs):
     print args
     print kwargs
@@ -101,7 +101,6 @@ print function_partial.args  # (9,)
 print function_partial.keywords  # {'x': 99}
 print '--------------------------------------------------------------------------------------------------'
 
-
 """
 functools.update_wrapper(wrapper, wrapped[, assigned][, updated])
     Update a wrapper function to look like the wrapped function.
@@ -118,19 +117,48 @@ functools.update_wrapper(wrapper, wrapped[, assigned][, updated])
     reflect the wrapper definition rather than the original function definition,
     which is typically less than helpful.
 """
+"""
+WRAPPER_ASSIGNMENTS = ('__module__', '__name__', '__doc__')
+WRAPPER_UPDATES = ('__dict__',)
+def update_wrapper(wrapper,
+                   wrapped,
+                   assigned = WRAPPER_ASSIGNMENTS,
+                   updated = WRAPPER_UPDATES):
+    '''Update a wrapper function to look like the wrapped function
 
+       wrapper is the function to be updated
+       wrapped is the original function
+       assigned is a tuple naming the attributes assigned directly
+       from the wrapped function to the wrapper function (defaults to
+       functools.WRAPPER_ASSIGNMENTS)
+       updated is a tuple naming the attributes of the wrapper that
+       are updated with the corresponding attribute from the wrapped
+       function (defaults to functools.WRAPPER_UPDATES)
+    '''
+    for attr in assigned:
+        setattr(wrapper, attr, getattr(wrapped, attr))
+    for attr in updated:
+        getattr(wrapper, attr).update(getattr(wrapped, attr, {}))
+    # Return the wrapper so this can be used as a decorator via partial()
+    return wrapper
 """
-functools.wraps(wrapped[, assigned][, updated])
-    This is a convenience function for invoking update_wrapper() as a function decorator when defining a wrapper function.
-    It is equivalent to partial(update_wrapper, wrapped=wrapped, assigned=assigned, updated=updated).
-"""
-print '--------------------------------------------------------------------------------------------------'
+
+print functools.WRAPPER_ASSIGNMENTS
+# ('__module__', '__name__', '__doc__')
+
+print functools.WRAPPER_UPDATES
+# ('__dict__',)
+
+print '************************************************************'
+# [1] 装饰器装饰函数后，返回的新函数使用装饰器中 wrapper 的 '__module__', '__name__', '__doc__', __dict__
 def my_decorator(f):
-    @functools.wraps(f)
     def wrapper(*args, **kwargs):
+        """
+        doc_string of wrapper
+        """
         print '(Calling decorated function)'
         return f(*args, **kwargs)
-    return wrapper
+    return wrapper                                     # !!!!!!!!!!
 
 @my_decorator
 def func():
@@ -139,14 +167,81 @@ def func():
     """
     print '(Calling original function)'
 
+func()
+# (Calling decorated function)
+# (Calling original function)
+print func.__module__
+# __main__
+print func.__name__
+# wrapper  # !!!!!!!!!!
+print func.__doc__
+# doc_string of wrapper  # !!!!!!!!!!
+print func.__dict__
+# {}
+print '************************************************************'
+# [2] 装饰器装饰函数后，返回的新函数使用原函数自己的 '__module__', '__name__', '__doc__',
+#     原函数的 __dict__ 也会被更新到装饰后的新函数中
+def my_decorator(f):
+    def wrapper(*args, **kwargs):
+        """
+        doc_string of wrapper
+        """
+        print '(Calling decorated function)'
+        return f(*args, **kwargs)
+    return functools.update_wrapper(wrapper, f)         # !!!!!!!!!!
+
+@my_decorator
+def func():
+    """
+    doc_string of func
+    """
+    print '(Calling original function)'
 
 func()
 # (Calling decorated function)
 # (Calling original function)
-print func.__name__
-# func
 print func.__module__
 # __main__
+print func.__name__
+# func  # !!!!!!!!!!
 print func.__doc__
-# doc_string of func
+# doc_string of func  # !!!!!!!!!!
+print func.__dict__
+# {}
+print '************************************************************'
+print '--------------------------------------------------------------------------------------------------'
+
+
+
+
+"""
+functools.wraps(wrapped[, assigned][, updated])
+    This is a convenience function for invoking update_wrapper() as a function decorator when defining a wrapper function.
+    It is equivalent to partial(update_wrapper, wrapped=wrapped, assigned=assigned, updated=updated).
+"""
+print '--------------------------------------------------------------------------------------------------'
+# def my_decorator(f):
+#     @functools.wraps(f)
+#     def wrapper(*args, **kwargs):
+#         print '(Calling decorated function)'
+#         return f(*args, **kwargs)
+#     return wrapper
+#
+# @my_decorator
+# def func():
+#     """
+#     doc_string of func
+#     """
+#     print '(Calling original function)'
+#
+#
+# func()
+# # (Calling decorated function)
+# # (Calling original function)
+# print func.__name__
+# # func
+# print func.__module__
+# # __main__
+# print func.__doc__
+# # doc_string of func
 print '--------------------------------------------------------------------------------------------------'
