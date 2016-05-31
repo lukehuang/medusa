@@ -161,22 +161,22 @@ def my_decorator(f):
     return wrapper                                     # !!!!!!!!!!
 
 @my_decorator
-def func():
+def function():
     """
-    doc_string of func
+    doc_string of function
     """
     print '(Calling original function)'
 
-func()
+function()
 # (Calling decorated function)
 # (Calling original function)
-print func.__module__
+print function.__module__
 # __main__
-print func.__name__
+print function.__name__
 # wrapper  # !!!!!!!!!!
-print func.__doc__
+print function.__doc__
 # doc_string of wrapper  # !!!!!!!!!!
-print func.__dict__
+print function.__dict__
 # {}
 print '************************************************************'
 # [2] 装饰器装饰函数后，返回的新函数使用原函数自己的 '__module__', '__name__', '__doc__',
@@ -191,57 +191,59 @@ def my_decorator(f):
     return functools.update_wrapper(wrapper, f)         # !!!!!!!!!!
 
 @my_decorator
-def func():
+def function():
     """
-    doc_string of func
+    doc_string of function
     """
     print '(Calling original function)'
 
-func()
+function()
 # (Calling decorated function)
 # (Calling original function)
-print func.__module__
+print function.__module__
 # __main__
-print func.__name__
-# func  # !!!!!!!!!!
-print func.__doc__
-# doc_string of func  # !!!!!!!!!!
-print func.__dict__
+print function.__name__
+# function  # !!!!!!!!!!
+print function.__doc__
+# doc_string of function  # !!!!!!!!!!
+print function.__dict__
 # {}
 print '************************************************************'
 print '--------------------------------------------------------------------------------------------------'
-
-
-
-
 """
 functools.wraps(wrapped[, assigned][, updated])
     This is a convenience function for invoking update_wrapper() as a function decorator when defining a wrapper function.
-    It is equivalent to partial(update_wrapper, wrapped=wrapped, assigned=assigned, updated=updated).
+    It is equivalent to:
+        partial(update_wrapper, wrapped=wrapped, assigned=assigned, updated=updated).
 """
-print '--------------------------------------------------------------------------------------------------'
-# def my_decorator(f):
-#     @functools.wraps(f)
-#     def wrapper(*args, **kwargs):
-#         print '(Calling decorated function)'
-#         return f(*args, **kwargs)
-#     return wrapper
-#
-# @my_decorator
-# def func():
-#     """
-#     doc_string of func
-#     """
-#     print '(Calling original function)'
-#
-#
-# func()
-# # (Calling decorated function)
-# # (Calling original function)
-# print func.__name__
-# # func
-# print func.__module__
-# # __main__
-# print func.__doc__
-# # doc_string of func
+
+def my_decorator(f):
+    @functools.wraps(f)  # !!!!!!!!!!
+    def wrapper(*args, **kwargs):
+        """
+        doc_string of wrapper
+        """
+        print '(Calling decorated function)'
+        return f(*args, **kwargs)
+    return wrapper
+
+@my_decorator
+def function():
+    """
+    doc_string of function
+    """
+    print '(Calling original function)'
+
+
+function()
+# (Calling decorated function)
+# (Calling original function)
+print function.__module__
+# __main__
+print function.__name__
+# function
+print function.__doc__
+# doc_string of function
+print function.__dict__
+# {}
 print '--------------------------------------------------------------------------------------------------'
