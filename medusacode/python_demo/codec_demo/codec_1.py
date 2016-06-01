@@ -55,8 +55,18 @@ s.decode(defaultencoding).encode("utf-8")
 
 """
 可以通过设置 defaultencoding 方式解决；
-也可通过明确指定 decode 方式解决；
+也可以通过明确指定 decode 方式解决；
 """
+# [1] 可以通过设置 defaultencoding 方式解决
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
+u = s.encode('utf-8')
+info(u)
+# Python字符串 <type 'str'>
+
+# [2] 也可以通过明确指定 decode 方式解决
 u = s.decode(encoding='utf-8').encode('utf-8')  # 'Python\xe5\xad\x97\xe7\xac\xa6\xe4\xb8\xb2'
 info(u)
 # Python字符串 <type 'str'>
