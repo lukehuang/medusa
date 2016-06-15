@@ -173,7 +173,7 @@ print getattr(a, 'xxx')
 # (A.__getattribute__)
 # (A.__getattr__) : [xxx from A.__getattr__]
 # xxx from A.__getattr__
-print '-------------------------------------------------------------------------------------------------------'
+
 print getattr(B, 'vb')
 # (A.__get__)(instance = None)                              (owner = <class '__main__.B'>) : [<__main__.A object at 0x101673a10>]
 # <__main__.A object at 0x101673a10>

@@ -32,11 +32,6 @@ setattr(object, name, value)
     The function assigns the value to the attribute, provided the object allows it.
     For example, setattr(x, 'foobar', 123) is equivalent to x.foobar = 123.
 """
-"""
-setattr(x, 'foobar', 123)
-    is equivalent to
-x.foobar = 123
-"""
 print '-------------------------------------------------------------------------------------------------------'
 class A(object):
     va = 'ABCDE'
@@ -92,4 +87,37 @@ print b.vb
 
 b.vb = A()
 # (A.__set__)(instance = <__main__.B object at 0x1015a3a10>)(value = <__main__.A object at 0x1015a3bd0>)
+print '-------------------------------------------------------------------------------------------------------'
+"""
+setattr(x, 'foobar', 123)
+    is equivalent to
+x.foobar = 123
+"""
+setattr(A, 'xxx', 111)
+# (nothing here)
+print A.xxx
+# 111
+
+setattr(a, 'xxx', 222)
+# (A.__setattr__)(key = xxx)(value = 222)
+print a.xxx
+# (A.__getattribute__)
+# 222
+
+setattr(B, 'vb', 333)
+# (nothing here)
+print B.vb
+# 333
+
+setattr(B, 'vb', A())
+# (nothing here)
+print B.vb
+# (A.__get__)(instance = None)(owner = <class '__main__.B'>) : [<__main__.A object at 0x106007b50>]
+# <__main__.A object at 0x106007b50>
+
+setattr(b, 'vb', A())
+# (A.__set__)(instance = <__main__.B object at 0x10e754a10>)(value = <__main__.A object at 0x10e754bd0>)
+print b.vb
+# (A.__get__)(instance = <__main__.B object at 0x10e754a10>)(owner = <class '__main__.B'>) : [<__main__.A object at 0x10e754b50>]
+# <__main__.A object at 0x10e754b50>
 print '-------------------------------------------------------------------------------------------------------'
