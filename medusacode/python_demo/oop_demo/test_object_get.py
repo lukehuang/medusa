@@ -27,8 +27,47 @@ object.__get__(self, instance, owner)
 每次访问descriptor（即实现了__get__的类），都会先经过__get__函数。
 
 注意:
-    当使用类访问不存在的变量时，不会经过__getattr__函数。
+    当使用类访问不存在的属性时，不会经过__getattr__函数。
+    当使用实例访问不存在的属性时，会经过__getattr__函数。
     而descriptor不存在此问题，只是把instance标识为none而已。
+"""
+"""
+object.__getattribute__(self, name)
+    Called unconditionally to implement attribute accesses for instances of the class.
+    If the class also defines __getattr__(), the latter will not be called unless
+    __getattribute__() either calls it explicitly or raises an AttributeError.
+    This method should return the (computed) attribute value or raise an AttributeError exception.
+    In order to avoid infinite recursion in this method, its implementation should always call the base class method
+    with the same name to access any attributes it needs, for example, object.__getattribute__(self, name).
+
+object.__getattr__(self, name)
+    Called when an attribute lookup has not found the attribute in the usual places
+    (i.e. it is not an instance attribute nor is it found in the class tree for self).
+    name is the attribute name.
+    This method should return the (computed) attribute value or raise an AttributeError exception.
+
+object.__getitem__(self, key)
+    Called to implement evaluation of self[key].
+    For sequence types, the accepted keys should be integers and slice objects.
+    Note that the special interpretation of negative indexes (if the class wishes to emulate a sequence type)
+    is up to the __getitem__() method.
+    If key is of an inappropriate type, TypeError may be raised;
+    if of a value outside the set of indexes for the sequence (after any special interpretation of negative values),
+    IndexError should be raised. For mapping types, if key is missing (not in the container), KeyError should be raised.
+
+object.__get__(self, instance, owner)
+    Called to get the attribute
+    of the owner class (class attribute access) or
+    of an instance of that class (instance attribute access).
+    owner is always the owner class,
+    instance is the instance that the attribute was accessed through, or None when the attribute is accessed through the owner.
+    This method should return the (computed) attribute value or raise an AttributeError exception.
+
+getattr(object, name[, default])
+    Return the value of the named attribute of object. name must be a string.
+    If the string is the name of one of the object’s attributes, the result is the value of that attribute.
+    For example, getattr(x, 'foobar') is equivalent to x.foobar.
+    If the named attribute does not exist, default is returned if provided, otherwise AttributeError is raised.
 """
 print '-------------------------------------------------------------------------------------------------------'
 class A(object):
@@ -63,6 +102,9 @@ print '-------------------------------------------------------------------------
 print A.va
 # ABCDE
 
+"""
+当使用类访问不存在的属性时，不会经过__getattr__函数。
+"""
 # print A.xxx
 # AttributeError: type object 'A' has no attribute 'xxx'
 
@@ -87,6 +129,9 @@ print a.va
 # (A.__getattribute__)
 # ABCDE
 
+"""
+当使用实例访问不存在的属性时，会经过__getattr__函数。
+"""
 print a.xxx
 # (A.__getattribute__)
 # (A.__getattr__) : [xxx from A.__getattr__]
@@ -102,6 +147,40 @@ print b.vb.va
 # (A.__get__)(instance = <__main__.B object at 0x108ebdbd0>)(owner = <class '__main__.B'>) : [<__main__.A object at 0x108ebda10>]
 # (A.__getattribute__)
 # ABCDE
+
+print b.vb.xxx
+# (A.__get__)(instance = <__main__.B object at 0x1021deb90>)(owner = <class '__main__.B'>) : [<__main__.A object at 0x1021dea10>]
+# (A.__getattribute__)
+# (A.__getattr__) : [xxx from A.__getattr__]
+# xxx from A.__getattr__
+print '-------------------------------------------------------------------------------------------------------'
+"""
+getattr(x, 'foobar')
+    is equivalent to
+x.foobar
+"""
+print getattr(A, 'va')
+# ABCDE
+
+# print getattr(A, 'xxx')
+# AttributeError: type object 'A' has no attribute 'xxx'
+
+print getattr(a, 'va')
+# (A.__getattribute__)
+# ABCDE
+
+print getattr(a, 'xxx')
+# (A.__getattribute__)
+# (A.__getattr__) : [xxx from A.__getattr__]
+# xxx from A.__getattr__
+print '-------------------------------------------------------------------------------------------------------'
+print getattr(B, 'vb')
+# (A.__get__)(instance = None)                              (owner = <class '__main__.B'>) : [<__main__.A object at 0x101673a10>]
+# <__main__.A object at 0x101673a10>
+
+print getattr(b, 'vb')
+# (A.__get__)(instance = <__main__.B object at 0x10dc3cb90>)(owner = <class '__main__.B'>) : [<__main__.A object at 0x10dc3ca10>]
+# <__main__.A object at 0x10dc3ca10>
 print '-------------------------------------------------------------------------------------------------------'
 a()
 # (A.__call__)
