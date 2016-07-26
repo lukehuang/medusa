@@ -63,14 +63,28 @@ Descriptor Protocol
     Defining the __set__() method with an exception raising placeholder is enough to make it a data descriptor.
 """
 print '-------------------------------------------------------------------------------------------------------'
+"""
+一句话概括: 描述符就是可重用的属性。
+
+property: 把函数调用伪装成对属性的访问。不足: 不能重复使用。
+descriptor: 是property的升级版，允许为重复的property逻辑编写单独的类来处理。优点: 可以重复使用。
+"""
+print '-------------------------------------------------------------------------------------------------------'
 class NonNegative(object):
     def __init__(self):
+        """
+        每个 NonNegative 的实例都维护着一个字典，其中保存着 [所有者实例] 和 [对应数据] 的映射关系。
+        当我们访问 instance.attr 时，
+            __get__ 方法会查找与 instance 相关联的数据，并返回这个结果。
+        当我们执行 instance.attr = xxx 时，
+            __set__ 方法采用的方式相同，只是这里会包含额外的非负检查。
+        """
         self.dict = dict()
         pass
 
     def __get__(self, instance, owner):
-        print '(descriptor get)(instance = %s)(owner = %s) %s' % (instance, owner, self.dict[instance] if instance else None)
-        return self.dict[instance] if instance else None
+        print '(descriptor get)(instance = %s)(owner = %s) %s' % (instance, owner, self.dict.get(instance))
+        return self.dict.get(instance)
 
     def __set__(self, instance, value):
         print '(descriptor set)(instance = %s)(value = %s)' % (instance, value)
