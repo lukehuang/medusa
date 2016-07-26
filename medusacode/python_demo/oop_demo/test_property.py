@@ -12,12 +12,15 @@ class A(object):
         pass
 
     def getx(self):
+        print '(getx)'
         return self._x
 
     def setx(self, value):
+        print '(setx)'
         self._x = value
 
     def delx(self):
+        print '(delx)'
         del self._x
 
     """
@@ -83,8 +86,11 @@ class B(object):
 a = A(9)
 
 a.x
+# (getx)
 a.x = 99
+# (setx)
 del a.x
+# (delx)
 # -------------------------------------------------------------------------------------------------------
 b = B(9)
 
