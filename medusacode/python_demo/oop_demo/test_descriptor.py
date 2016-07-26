@@ -151,3 +151,4 @@ s2.check()
 # (descriptor get)(instance = <__main__.Math object at 0x10f177c50>)(owner = <class '__main__.Math'>) 99
 # PASS
 print '-------------------------------------------------------------------------------------------------------'
+
