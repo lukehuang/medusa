@@ -109,7 +109,7 @@ STATIC_URL = '/static/'
 
 # ====================================================================================================
 # MySQL
-DATABASES = {
+DATABASES_MYSQL = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'medusa',
@@ -121,16 +121,18 @@ DATABASES = {
 }
 
 # PostgreSQL
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'medusa',
-#         'USER': 'medusa',
-#         'PASSWORD': 'medusa@psql',
-#         'HOST': '192.168.100.100',
-#         'PORT': '5432',
-#     }
-# }
+DATABASES_POSTGRESQL = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'medusa',
+        'USER': 'medusa',
+        'PASSWORD': 'medusa@psql',
+        'HOST': '192.168.100.100',
+        'PORT': '5432',
+    }
+}
+
+DATABASES = DATABASES_MYSQL
 
 CACHES = {
     'default': {
