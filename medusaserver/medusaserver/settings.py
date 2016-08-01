@@ -38,6 +38,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # ------------------------------
+    # Django Debug Toolbar
+    'debug_toolbar',
+    # django-celery
     'djcelery',
     # ------------------------------
 )
