@@ -42,6 +42,8 @@ INSTALLED_APPS = (
     'debug_toolbar',
     # django-celery
     'djcelery',
+    # Django REST framework
+    'rest_framework',
     # ------------------------------
     'myapp',
     # ------------------------------
@@ -166,7 +168,7 @@ LOGGING = {
     }
 }
 
-# ------------------------------------------------------------------------------------------
+# ====================================================================================================
 # Configure Django project to use Celery
 
 # [1] RabbitMQ as broker
@@ -180,5 +182,14 @@ CELERY_RESULT_BACKEND = 'redis://192.168.100.100:6379/2'
 
 import djcelery
 djcelery.setup_loader()
-# ------------------------------------------------------------------------------------------
+# ====================================================================================================
+# Django REST framework
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 # ====================================================================================================
