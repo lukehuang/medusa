@@ -57,8 +57,9 @@ class DownloadView(View):
     def get(self, request, *args, **kwargs):
         # url = 'http://records.cloud.chivox.com/57a004e72bedada5b80109f3.mp3'
         url = request.GET.get('url')
+        basename = os.path.basename(url)
         resp = requests.get(url)
         response = HttpResponse(content=resp.content)
         response['Content-Type'] = 'application/octet-stream'
-        response['Content-Disposition'] = 'attachment;filename="57a004e72bedada5b80109f3.mp3"'
+        response['Content-Disposition'] = 'attachment;filename="%s"' % basename
         return response
