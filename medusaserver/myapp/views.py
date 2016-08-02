@@ -24,9 +24,9 @@ class DownloadView(View):
     """
     文件下载功能测试
     """
-    # [1] 文件流(string)
+    # # [1] 文件流(string)
     # def get(self, request, *args, **kwargs):
-    #     # os.getcwd() = '/home/workspace/mysite'
+    #     # os.getcwd() = '/home/workspace/medusa/medusaserver'
     #     file_download = 'README.md'
     #     with open(file_download) as f:
     #         content = f.read()
@@ -35,7 +35,7 @@ class DownloadView(View):
     #     response['Content-Disposition'] = 'attachment;filename="%s"' % file_download
     #     return response
 
-    # [2] 迭代器(iterator)
+    # # [2] 迭代器(iterator)
     # def get(self, request, *args, **kwargs):
     #     # an iterator that yields strings as content
     #     def file_iterator(file_name, size_byte=64):
@@ -53,9 +53,10 @@ class DownloadView(View):
     #     response['Content-Disposition'] = 'attachment;filename="%s"' % file_download
     #     return response
 
-    # [3] 利用 requests 实现下载代理
+    # [3] 下载代理(利用requests实现)
     def get(self, request, *args, **kwargs):
         # url = 'http://records.cloud.chivox.com/57a004e72bedada5b80109f3.mp3'
+        # url = 'http://photos.breadtrip.com/photo_2016_06_25_b696dd78fbb4be3c42a2bb421296bc9e.jpg'
         url = request.GET.get('url')
         basename = os.path.basename(url)
         resp = requests.get(url)
