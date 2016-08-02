@@ -43,6 +43,8 @@ INSTALLED_APPS = (
     # django-celery
     'djcelery',
     # ------------------------------
+    'myapp',
+    # ------------------------------
 )
 
 MIDDLEWARE_CLASSES = (
