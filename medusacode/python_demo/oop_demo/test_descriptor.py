@@ -7,7 +7,7 @@ descriptor
 """
 definition(short version):
     Descriptors are objects with any of __get__() , __set__() , or __delete__().
-    These descriptor objects can be used as attributes on other object class definitions.
+    These descriptor objects can be used as attributes on other class definitions.
 
 definition:
     In general, a descriptor is an object attribute with "binding behavior",
