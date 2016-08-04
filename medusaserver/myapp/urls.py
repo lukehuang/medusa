@@ -6,4 +6,8 @@ from myapp import views
 urlpatterns = [
     # 对于无法直接通过HTTP请求下载的资源,添加下载代理通过requests获取资源后修改header来实现浏览器下载
     url(r'^test/download/$', views.DownloadView.as_view(), name='download'),
+    # Jinja
+    url('^test/jinja/$', views.JinjaView.as_view(), name='jinja'),
+    # echarts 显示树状结构
+    url('^test/tree/$', views.TreeView.as_view(), name='tree'),
 ]

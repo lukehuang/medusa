@@ -64,3 +64,29 @@ class DownloadView(View):
         response['Content-Type'] = 'application/octet-stream'
         response['Content-Disposition'] = 'attachment;filename="%s"' % basename
         return response
+
+
+
+
+class JinjaView(View):
+    """
+    Jinja2
+    """
+    def get(self, request, *args, **kwargs):
+        context = {}
+        context.update(none_value=None)
+        template = 'jinja2.html'
+        return render_to_response(template, context)
+
+
+
+
+class TreeView(View):
+    """
+    echarts 显示树状结构
+    """
+    def get(self, request, *args, **kwargs):
+        context = {}
+        context.update(none_value=None)
+        template = 'jinja2.html'
+        return render_to_response(template, context)
