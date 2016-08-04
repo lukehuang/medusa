@@ -66,8 +66,6 @@ class DownloadView(View):
         return response
 
 
-
-
 class TestTemplateView(View):
     """
     渲染模板
@@ -79,14 +77,22 @@ class TestTemplateView(View):
         return render_to_response(template, context)
 
 
-
-
 class TreeView(View):
     """
     echarts 显示树状结构
     """
     def get(self, request, *args, **kwargs):
         context = {}
-        context.update(none_value=None)
+        a, b, c, d, e, f, g = 'A', 'B', 'C', 'D', 'E', 'F', 'G'
+        tree = {
+            a: [b, c],
+            b: [d, e],
+            c: [],
+            d: [f, g],
+            e: [],
+            f: [],
+            g: [],
+        }
+        context.update(tree=tree)
         template = 'tree.html'
         return render_to_response(template, context)

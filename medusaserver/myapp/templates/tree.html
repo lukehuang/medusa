@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block head %}
+    <title>(title)</title>
+    <h6>(head)</h6>
+{% endblock %}
+
+{% block body %}
+    {{ tree }}
+{% endblock %}
