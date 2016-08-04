@@ -68,14 +68,14 @@ class DownloadView(View):
 
 
 
-class JinjaView(View):
+class TestTemplateView(View):
     """
-    Jinja2
+    渲染模板
     """
     def get(self, request, *args, **kwargs):
         context = {}
         context.update(none_value=None)
-        template = 'jinja2.html'
+        template = 'test.html'
         return render_to_response(template, context)
 
 
@@ -88,5 +88,5 @@ class TreeView(View):
     def get(self, request, *args, **kwargs):
         context = {}
         context.update(none_value=None)
-        template = 'jinja2.html'
+        template = 'tree.html'
         return render_to_response(template, context)
