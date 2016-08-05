@@ -5,7 +5,11 @@
 The contextlib module provides some functions and a decorator
 that are useful when writing objects for use with the ‘with‘ statement.
 
-The decorator is called contextmanager(), and lets you write a single generator function instead of defining a new class.
+The decorator is called contextmanager(), and lets you:
+    [write a single generator function]
+    instead of
+    [defining a new class].
+
     The generator should yield exactly one value.
     The code up to the yield will be executed as the__enter__() method,
     and the value yielded will be the method’s return value that will get bound to
