@@ -38,11 +38,6 @@ What Are Descriptors?
     self is the [instance] of the descriptor (probably just one for the class of the obj_instance)
 """
 """
-定义:
-    descriptor 是实现了 __get__(), __set__(), __delete__() 方法的类的实例(对象)。
-    任何实现 __get__(), __set__(), __delete__() 方法中一至多个的类的对象，都是 descriptor 对象。
-"""
-"""
 Descriptor Protocol
     descr.__get__(self, obj, type=None) --> value
     descr.__set__(self, obj, value) --> None
@@ -63,6 +58,11 @@ Descriptor Protocol
     Defining the __set__() method with an exception raising placeholder is enough to make it a data descriptor.
 """
 print '-------------------------------------------------------------------------------------------------------'
+"""
+定义:
+    descriptor 是实现了 __get__(), __set__(), __delete__() 方法的类的实例(对象)。
+    任何实现 __get__(), __set__(), __delete__() 方法中一至多个的类的对象，都是 descriptor 对象。
+"""
 """
 一句话概括: 描述符就是可重用的属性。
 
