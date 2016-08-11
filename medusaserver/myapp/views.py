@@ -4,6 +4,7 @@
 import os
 import datetime
 import random
+import json
 
 from django.conf import settings
 from django.http import HttpResponse
@@ -96,3 +97,16 @@ class TreeView(View):
         context.update(tree=tree)
         template = 'tree.html'
         return render_to_response(template, context)
+
+
+"""
+抓取新闻数据
+"""
+from tasks.task_news import get_news
+NEWS_URL = 'http://toutiao.com/api/article/real_time_news'
+class GetNewsView(View):
+    def get(self, request, *args, **kwargs):
+        url = request.GET.get('url', NEWS_URL)
+        response_requests = get_news(url)
+        response = HttpResponse(json.dumps(response_requests), content_type='application/json')
+        return response

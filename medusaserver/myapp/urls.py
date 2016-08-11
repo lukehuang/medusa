@@ -10,4 +10,6 @@ urlpatterns = [
     url('^test/template/$', views.TestTemplateView.as_view(), name='test_template'),
     # echarts 显示树状结构
     url('^test/tree/$', views.TreeView.as_view(), name='tree'),
+    # 抓取新闻数据
+    url('^task/get_news/$', views.GetNewsView.as_view(), name='get_news'),
 ]
