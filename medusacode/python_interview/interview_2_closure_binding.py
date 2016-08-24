@@ -33,7 +33,7 @@ print '-------------------------------------------------------------------------
 另外一个解决方案就是创造一个闭包，利用默认函数立即绑定。
 """
 def multipliers():
-    return [lambda x, i=i: i * x for i in range(4)]
+    return [lambda x, ii=i: ii * x for i in range(4)]
 
 print [m(2) for m in multipliers()]
 # [0, 2, 4, 6]
