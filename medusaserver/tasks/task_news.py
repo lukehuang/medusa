@@ -1,19 +1,61 @@
-# coding: utf-8
+#!/usr/bin/env python
+# coding:utf-8
 
 """
 抓取新闻数据
 """
 
 import json
-
+import datetime
+import requests
 from celery.task import task
 
-import requests
+from myapp.models import News
+
+
+URL_NEWS = 'http://apis.baidu.com/showapi_open_bus/channel_news/search_news'
+API_KEY = '3a4794e55cf87069b8de63afec1aa09a'
 
 
 @task()
-def get_news(url):
-    response = requests.get(url)
-    if response.status_code != 200:
-        return None
-    return json.loads(response.content)
+def get_news():
+    response = requests.request(
+        method='GET',
+        url=URL_NEWS,
+        headers={'apikey': API_KEY},
+    )
+    # data_dict = json.loads(response.content)  # <type 'dict'>
+    data_dict = response.json()  # <type 'dict'>
+
+    # print data_dict
+    if data_dict['showapi_res_code'] == 0 and data_dict['showapi_res_body']['ret_code'] == 0:
+        contentlist = data_dict['showapi_res_body']['pagebean']['contentlist']
+        # print contentlist
+        news_formatted = [
+            {
+                'img': content['imageurls'][0]['url'] if content['imageurls'] else None,
+                'title': content['title'],
+                'datetime_publish': datetime.datetime.strptime(content['pubDate'], '%Y-%m-%d %H:%M:%S'),
+                'channel_id': content['channelId'],
+                'channel_name': content['channelName'],
+                'desc': content['desc'],
+                'source': content['source'],
+                'link': content['link'],
+            } for content in contentlist
+        ]
+        print news_formatted
+        news_list = [
+            News(
+                title=content['title'].encode('utf-8'),
+                img=content['img'],
+                link=content['link'],
+                source=content['source'].encode('utf-8'),
+                channel_id=content['channel_id'],
+                channel_name=content['channel_name'].encode('utf-8'),
+                desc=content['desc'].encode('utf-8'),
+                datetime_publish=content['datetime_publish'],
+            )
+            for content in news_formatted
+        ]
+        # print news_list
+        News.objects.bulk_create(news_list)
