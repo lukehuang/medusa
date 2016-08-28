@@ -64,8 +64,9 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'medusaserver.urls'
 
+
 # DjangoTemplates
-TEMPLATES = [
+TEMPLATES_DJANGO = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
@@ -80,6 +81,22 @@ TEMPLATES = [
         },
     },
 ]
+
+# Jinja2
+TEMPLATES_JINJA2 = [
+    {
+        'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        'DIRS': [],
+        # When APP_DIRS is True, Jinja2 engines look for templates
+        # in the jinja2 subdirectory of installed applications.
+        'APP_DIRS': True,
+        'OPTIONS': {
+        },
+    },
+]
+
+TEMPLATES = TEMPLATES_JINJA2
+
 
 WSGI_APPLICATION = 'medusaserver.wsgi.application'
 

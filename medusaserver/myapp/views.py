@@ -17,6 +17,9 @@ from django.core.urlresolvers import reverse
 from django.core.files.uploadedfile import UploadedFile, InMemoryUploadedFile, TemporaryUploadedFile
 from django.core.files import File
 from django.core.files.images import ImageFile
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
+from myapp.models import News
 
 import requests
 
@@ -99,14 +102,35 @@ class TreeView(View):
         return render_to_response(template, context)
 
 
-"""
-抓取新闻数据
-"""
-from tasks.task_news import get_news
-NEWS_URL = 'http://toutiao.com/api/article/real_time_news'
-class GetNewsView(View):
+
+
+class NewsListView(View):
+    """
+    新闻列表
+    """
     def get(self, request, *args, **kwargs):
-        url = request.GET.get('url', NEWS_URL)
-        response_requests = get_news(url)
-        response = HttpResponse(json.dumps(response_requests), content_type='application/json')
-        return response
+        # 关键字参数和分页参数
+        keyword = request.GET.get('keyword')
+        page = request.GET.get('page', 1)
+        # 查询数据库
+        news = News.objects.order_by('-datetime_updated')
+        if keyword:
+            strict = Q(title__icontains=keyword) | \
+                     Q(desc__icontains=keyword)
+            news = News.filter(strict)
+            pass
+        # 分页
+        paginator = Paginator(object_list=news, per_page=10)
+        try:
+            pager = paginator.page(page)
+        except PageNotAnInteger:
+            pager = paginator.page(1)
+        except EmptyPage:
+            pager = paginator.page(paginator.num_pages)
+            pass
+        # 分页片段中使用 pager.queries 达到在翻页时带着查询参数的目的
+        pager.queries = "keyword=%s" % (keyword or '',)
+        # [网页模板]和[通用分页片段(pagination_jinja.html)]中使用 "page" 来访问 Page object
+        context = dict()
+        context['page'] = pager
+        return render_to_response('news_list.html', context)
