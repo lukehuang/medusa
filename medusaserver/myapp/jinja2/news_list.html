@@ -13,7 +13,7 @@
 <form class="" method="get" action="{{ url('news_list') }}">
     {# {% csrf_token %} #}
     <div class="">
-        <input class="" type="text" name="keyword" placeholder="">
+        <input class="" type="text" name="keyword" placeholder="" value="{{ keyword }}">
         <button class="btn btn-default" type="submit">Search</button>
     </div>
 </form>

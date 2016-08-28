@@ -132,5 +132,6 @@ class NewsListView(View):
         pager.queries = "keyword=%s" % (keyword or '',)
         # [网页模板]和[通用分页片段(pagination_jinja.html)]中使用 "page" 来访问 Page object
         context = dict()
+        context['keyword'] = keyword
         context['page'] = pager
         return render_to_response('news_list.html', context)
