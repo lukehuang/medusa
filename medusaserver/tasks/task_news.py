@@ -9,6 +9,7 @@ import json
 import datetime
 import requests
 from celery.task import task
+from django.db import IntegrityError
 
 from myapp.models import News
 
@@ -43,19 +44,38 @@ def get_news():
                 'link': content['link'],
             } for content in contentlist
         ]
-        print news_formatted
-        news_list = [
-            News(
-                title=content['title'].encode('utf-8'),
-                img=content['img'],
-                link=content['link'],
-                source=content['source'].encode('utf-8'),
-                channel_id=content['channel_id'],
-                channel_name=content['channel_name'].encode('utf-8'),
-                desc=content['desc'].encode('utf-8'),
-                datetime_publish=content['datetime_publish'],
-            )
-            for content in news_formatted
-        ]
+        # print news_formatted
+
+        # [1] 使用 bulk_create 一次性处理多条数据时, 只要数据中有一条与库中重复, 就会导致多条数据无法插入
+        # news_list = [
+        #     News(
+        #         title=content['title'].encode('utf-8'),
+        #         img=content['img'],
+        #         link=content['link'],
+        #         source=content['source'].encode('utf-8'),
+        #         channel_id=content['channel_id'],
+        #         channel_name=content['channel_name'].encode('utf-8'),
+        #         desc=content['desc'].encode('utf-8'),
+        #         datetime_publish=content['datetime_publish'],
+        #     )
+        #     for content in news_formatted
+        # ]
         # print news_list
-        News.objects.bulk_create(news_list)
+        # News.objects.bulk_create(news_list)
+
+        # [2] 每条数据单独 create 并捕捉 IntegrityError
+        for content in news_formatted:
+            try:
+                News.objects.create(
+                    title=content['title'].encode('utf-8'),
+                    img=content['img'],
+                    link=content['link'],
+                    source=content['source'].encode('utf-8'),
+                    channel_id=content['channel_id'],
+                    channel_name=content['channel_name'].encode('utf-8'),
+                    desc=content['desc'].encode('utf-8'),
+                    datetime_publish=content['datetime_publish'],
+                )
+            except IntegrityError, e:
+                print e
+                pass
