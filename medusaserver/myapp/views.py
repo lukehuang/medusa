@@ -114,6 +114,8 @@ class NewsListView(View):
         page = request.GET.get('page', 1)
         # 查询数据库
         news = News.objects.order_by('-datetime_updated')
+        # 过滤掉没有图片的新闻条目
+        news = news.filter(img__isnull=False)
         if keyword:
             strict = Q(title__icontains=keyword) | \
                      Q(desc__icontains=keyword)
