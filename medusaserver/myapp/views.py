@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# coding: utf-8
+# coding:utf-8
 
 import os
 import datetime
@@ -117,7 +117,7 @@ class NewsListView(View):
         if keyword:
             strict = Q(title__icontains=keyword) | \
                      Q(desc__icontains=keyword)
-            news = News.filter(strict)
+            news = news.filter(strict)
             pass
         # 分页
         paginator = Paginator(object_list=news, per_page=10)
