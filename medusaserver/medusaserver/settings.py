@@ -91,10 +91,16 @@ TEMPLATES_JINJA2 = [
         # in the jinja2 subdirectory of installed applications.
         'APP_DIRS': True,
         'OPTIONS': {
+            # The default configuration is purposefully kept to a minimum.
+            # The Jinja2 backend doesn’t create a Django-flavored environment.
+            # It doesn’t know about Django context processors, filters, and tags.
+            # In order to use Django-specific APIs, you must configure them into the environment.
+            'environment': 'medusaserver.jinja2.environment',
         },
     },
 ]
 
+# TEMPLATES = TEMPLATES_DJANGO
 TEMPLATES = TEMPLATES_JINJA2
 
 

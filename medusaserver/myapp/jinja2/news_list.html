@@ -7,14 +7,16 @@
 
 {% block body %}
 
-
+{# Django1.3 + coffin #}
 {#<form class="" method="get" action="{% url news_list %}">#}
-{#    {% csrf_token %}#}
-{#    <div class="">#}
-{#        <input class="" type="text" name="keyword" placeholder="">#}
-{#        <button class="btn btn-default" type="submit">Search</button>#}
-{#    </div>#}
-{#</form>#}
+{# Django1.8 Jinja2 (with environment set) #}
+<form class="" method="get" action="{{ url('news_list') }}">
+    {% csrf_token %}
+    <div class="">
+        <input class="" type="text" name="keyword" placeholder="">
+        <button class="btn btn-default" type="submit">Search</button>
+    </div>
+</form>
 
 <table class="table table-bordered table-striped">
     <thead>
