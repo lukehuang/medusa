@@ -46,6 +46,8 @@ INSTALLED_APPS = (
     'djcelery',
     # Django REST framework
     'rest_framework',
+    # Sentry Raven
+    'raven.contrib.django.raven_compat',
     # ------------------------------
     'myapp',
     'rest',
@@ -233,5 +235,14 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAdminUser',
     ],
     'PAGE_SIZE': 10,
+}
+# ====================================================================================================
+# Sentry Raven
+
+import raven
+RAVEN_CONFIG = {
+    'dsn': 'http://a5b24f6c7bf54fea9078a66e1ac14ab4:d2225864d4b3459c89a329454cea4c1e@192.168.100.100:9000/2',
+    # If you are using git, you can also automatically configure the release based on the git info.
+    # 'release': raven.fetch_git_sha(os.path.dirname(__file__)),
 }
 # ====================================================================================================
