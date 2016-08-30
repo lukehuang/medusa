@@ -148,5 +148,8 @@ class ExceptionTestView(View):
             1/0
         except Exception, e:
             from raven.contrib.django.raven_compat.models import client
+            # Capture an Error
             client.captureException()
+            # Reporting an Event
+            client.captureMessage('This is a message sent from medusaserver by client.captureMessage()')
         return HttpResponse()
