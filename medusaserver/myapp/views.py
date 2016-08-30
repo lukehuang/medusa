@@ -139,9 +139,9 @@ class NewsListView(View):
         return render_to_response('news_list.html', context)
 
 
-class ExceptionTestView(View):
+class SentryTestView(View):
     """
-    测试 Sentry 监控异常
+    测试 Sentry ( Raven captureException & captureMessage)
     """
     def get(self, request, *args, **kwargs):
         try:
@@ -153,3 +153,15 @@ class ExceptionTestView(View):
             # Reporting an Event
             client.captureMessage('This is a message sent from medusaserver by client.captureMessage()')
         return HttpResponse()
+
+
+class ExceptionTestView(View):
+    """
+    INSTALLED_APPS = (
+        'raven.contrib.django.raven_compat',
+    )
+    This causes Raven to install a hook in Django that will automatically report uncaught exceptions.
+    """
+    def get(self, request, *args, **kwargs):
+        ret = 1/0
+        return HttpResponse(ret)
