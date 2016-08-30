@@ -141,7 +141,7 @@ class NewsListView(View):
 
 class SentryTestView(View):
     """
-    测试 Sentry ( Raven captureException & captureMessage)
+    测试 Sentry ( Raven captureException & captureMessage )
     """
     def get(self, request, *args, **kwargs):
         try:
@@ -165,3 +165,27 @@ class ExceptionTestView(View):
     def get(self, request, *args, **kwargs):
         ret = 1/0
         return HttpResponse(ret)
+
+
+class SentryLogTestView(View):
+    """
+    测试 Sentry ( Sentry Log )
+    """
+    def get(self, request, *args, **kwargs):
+        try:
+            1/0
+        except Exception, e:
+            """
+            Logging usage works the same way as it does outside of Django,
+            with the addition of an optional request key in the extra data:
+            """
+            import logging
+            logger = logging.getLogger('root')
+            logger.error(
+                msg='ERROR: %s' % str("This is from logging.getLogger('root').error(): %s" % str(e)),
+                exc_info=True,
+                extra={
+                'request': request,  # Optionally pass a request and we'll grab any information we can
+                }
+            )
+        return HttpResponse()
