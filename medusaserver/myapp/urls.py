@@ -12,4 +12,6 @@ urlpatterns = [
     url('^test/template/$', views.TestTemplateView.as_view(), name='test_template'),
     # echarts 显示树状结构
     url('^test/tree/$', views.TreeView.as_view(), name='tree'),
+    # 测试 Sentry 监控异常
+    url('^test/sentry/$', views.ExceptionTestView.as_view(), name='exception_test'),
 ]

@@ -137,3 +137,16 @@ class NewsListView(View):
         context['keyword'] = keyword
         context['page'] = pager
         return render_to_response('news_list.html', context)
+
+
+class ExceptionTestView(View):
+    """
+    测试 Sentry 监控异常
+    """
+    def get(self, request, *args, **kwargs):
+        try:
+            1/0
+        except Exception, e:
+            from raven.contrib.django.raven_compat.models import client
+            client.captureException()
+        return HttpResponse()
