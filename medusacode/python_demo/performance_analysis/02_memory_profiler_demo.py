@@ -2,6 +2,12 @@
 # coding:utf-8
 
 """
+逐行分析内存使用
+"""
+"""
+memory_profiler
+
+vagrant@precise64:~$ pip install memory_profiler
 """
 
 @profile
@@ -17,25 +23,25 @@ def calculate(n):
         s *= i
     return s
 
-print calculate(10000)
+print 'ret = %s' % calculate(10000)
 
 """
-vagrant@precise64:~$ python -m memory_profiler memory_profiler_demo.py
-0
-Filename: memory_profiler_demo.py
+vagrant@precise64:/home/workspace/medusa/medusacode/python_demo/performance_analysis$ python -m memory_profiler 02_memory_profiler_demo.py
+ret = 0
+Filename: 02_memory_profiler_demo.py
 
 Line #    Mem usage    Increment   Line Contents
 ================================================
-     7   18.402 MiB    0.000 MiB   @profile
-     8                             def calculate(n):
-     9   18.402 MiB    0.000 MiB       s = 0
-    10   18.727 MiB    0.324 MiB       for i in range(n):
-    11   18.727 MiB    0.000 MiB           s += i
-    12   18.727 MiB    0.000 MiB       for i in xrange(n):
-    13   18.727 MiB    0.000 MiB           s += i
-    14   18.898 MiB    0.172 MiB       for i in range(n):
-    15   18.898 MiB    0.000 MiB           s *= i
-    16   18.898 MiB    0.000 MiB       for i in xrange(n):
-    17   18.898 MiB    0.000 MiB           s *= i
-    18   18.898 MiB    0.000 MiB       return s
+     8   21.047 MiB    0.000 MiB   @profile
+     9                             def calculate(n):
+    10   21.047 MiB    0.000 MiB       s = 0
+    11   21.398 MiB    0.352 MiB       for i in range(n):
+    12   21.398 MiB    0.000 MiB           s += i
+    13   21.398 MiB    0.000 MiB       for i in xrange(n):
+    14   21.398 MiB    0.000 MiB           s += i
+    15   21.547 MiB    0.148 MiB       for i in range(n):
+    16   21.547 MiB    0.000 MiB           s *= i
+    17   21.547 MiB    0.000 MiB       for i in xrange(n):
+    18   21.547 MiB    0.000 MiB           s *= i
+    19   21.547 MiB    0.000 MiB       return s
 """

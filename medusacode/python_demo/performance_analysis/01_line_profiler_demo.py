@@ -2,6 +2,16 @@
 # coding:utf-8
 
 """
+逐行计时 & 分析执行频率
+"""
+"""
+line_profiler
+
+vagrant@precise64:~$ pip install line_profiler
+vagrant@precise64:~$ which kernprof
+/usr/local/bin/kernprof
+"""
+"""
 vagrant@precise64:~$ kernprof --help
 Usage: kernprof [-s setupfile] [-o output_file_path] scriptfile [arg] ...
 
@@ -35,30 +45,30 @@ def calculate(n):
         s *= i
     return s
 
-print calculate(10000)
+print 'ret = %s' % calculate(10000)
 
 """
-vagrant@precise64:~$ kernprof -l -v line_profiler_demo.py
-0
-Wrote profile results to line_profiler.py.lprof
+vagrant@precise64:/home/workspace/medusa/medusacode/python_demo/performance_analysis$ kernprof -l -v 01_line_profiler_demo.py
+ret = 0
+Wrote profile results to 01_line_profiler_demo.py.lprof
 Timer unit: 1e-06 s
 
-Total time: 0.173917 s
-File: line_profiler.py
-Function: calculate at line 25
+Total time: 0.107646 s
+File: 01_line_profiler_demo.py
+Function: calculate at line 29
 
 Line #      Hits         Time  Per Hit   % Time  Line Contents
 ==============================================================
-    25                                           @profile
-    26                                           def calculate(n):
-    27         1            3      3.0      0.0      s = 0
-    28     10001        20990      2.1     12.1      for i in range(n):
-    29     10000        21504      2.2     12.4          s += i
-    30     10001        22206      2.2     12.8      for i in xrange(n):
-    31     10000        21380      2.1     12.3          s += i
-    32     10001        20933      2.1     12.0      for i in range(n):
-    33     10000        21329      2.1     12.3          s *= i
-    34     10001        21841      2.2     12.6      for i in xrange(n):
-    35     10000        23729      2.4     13.6          s *= i
-    36         1            2      2.0      0.0      return s
+    29                                           @profile
+    30                                           def calculate(n):
+    31         1            2      2.0      0.0      s = 0
+    32     10001        14565      1.5     13.5      for i in range(n):
+    33     10000        14273      1.4     13.3          s += i
+    34     10001        12172      1.2     11.3      for i in xrange(n):
+    35     10000        12605      1.3     11.7          s += i
+    36     10001        12686      1.3     11.8      for i in range(n):
+    37     10000        13191      1.3     12.3          s *= i
+    38     10001        13724      1.4     12.7      for i in xrange(n):
+    39     10000        14426      1.4     13.4          s *= i
+    40         1            2      2.0      0.0      return s
 """
