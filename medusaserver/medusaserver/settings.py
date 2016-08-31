@@ -57,6 +57,7 @@ INSTALLED_APPS = (
 
 MIDDLEWARE_CLASSES = (
     # ------------------------------
+    # Sentry Raven
     'raven.contrib.django.raven_compat.middleware.Sentry404CatchMiddleware',
     # ------------------------------
     'django.contrib.sessions.middleware.SessionMiddleware',
