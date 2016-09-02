@@ -2,7 +2,6 @@
 # coding:utf-8
 
 import requests
-from pprint import pprint
 import datetime
 
 HOTEL_SERVICE_HOST = 'X.X.X.X'

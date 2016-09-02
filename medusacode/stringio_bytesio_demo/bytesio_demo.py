@@ -20,7 +20,7 @@ bytes_file = BytesIO()
 print bytes_file
 # <_io.BytesIO object at 0x107270410>
 
-number_bytes = bytes_file.write('中文'.decode(encoding='utf-8').encode('utf-8'))
+number_bytes = bytes_file.write('中文'.decode(encoding='utf-8').encode(encoding='utf-8'))
 print bytes_file.getvalue()
 # 中文
 print number_bytes

@@ -98,8 +98,8 @@ class Math(object):
     是完全通过类属性模拟实例属性，
     因此实例属性其实根本不存在。
     """
-    score = NonNegative()  # descriptor 对象(Math的类属性)
     pid = NonNegative()  # descriptor 对象(Math的类属性)
+    score = NonNegative()  # descriptor 对象(Math的类属性)
 
     def __init__(self, pid, score):
         """
