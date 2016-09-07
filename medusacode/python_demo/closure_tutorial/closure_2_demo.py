@@ -9,9 +9,9 @@ potentially after flow-of-control has left that scope. (That last bit is very us
 A closure allows you to bind variables into a function without passing them as parameters.
 """
 
+
 def makeConstantAdder(x):
     constant = x
-
     def adder(y):  # adder() is a closure (also a object)
         return y + constant
     return adder
