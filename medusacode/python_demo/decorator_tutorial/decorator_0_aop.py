@@ -15,7 +15,9 @@ import time
 
 
 def timeit(f):
+    print '(in timeit)'
     def wrapper(*args, **kwargs):
+        print '(in wrapper)'
         start = time.clock()
         ret = f(*args, **kwargs)
         stop = time.clock()
@@ -26,8 +28,12 @@ def timeit(f):
 
 @timeit
 def func(a, b):
-    print 'in func()'
+    print '(in func)'
     return a + b
+# (in timeit)
 
 r = func(1, 2)
-print r
+# (in wrapper)
+# (in func)
+# used: 4e-06
+# ret: 3
