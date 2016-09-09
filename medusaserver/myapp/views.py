@@ -111,6 +111,18 @@ class NewsListView(View):
     新闻列表
     """
     def get(self, request, *args, **kwargs):
+        print '================================================================================'
+        process = multiprocessing.current_process()
+        thread = threading.current_thread()
+        dt = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S:%f')
+        process_thread_info = '(datetime=%s) [Process: %s %s %s] [Thread: %s %s %s]' % \
+                              (
+                                  dt,
+                                  process.name, process.pid, id(process),
+                                  thread.getName(), thread.ident, id(thread),
+                              )
+        print process_thread_info
+        print '================================================================================'
         # 关键字参数和分页参数
         keyword = request.GET.get('keyword')
         page = request.GET.get('page', 1)

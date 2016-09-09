@@ -161,7 +161,10 @@ STATICFILES_DIRS = [
 # MySQL
 DATABASES_MYSQL = {
     'default': {
+        # django.db.backends.mysql
         'ENGINE': 'django.db.backends.mysql',
+        # my own mysql
+        # 'ENGINE': 'lib.mysql',
         'NAME': 'medusa',
         'USER': 'medusa',
         'PASSWORD': 'medusa',
@@ -173,7 +176,15 @@ DATABASES_MYSQL = {
 # PostgreSQL
 DATABASES_POSTGRESQL = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # django.db.backends.postgresql_psycopg2
+        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # my own postgresql_psycopg2
+        'ENGINE': 'lib.postgresql_psycopg2',
+        # CONN_MAX_AGE:
+        # The lifetime of a database connection, in seconds.
+        # Use 0 to close database connections at the end of each request — Django’s historical behavior
+        # Use None for unlimited persistent connections.
+        'CONN_MAX_AGE': None,
         'NAME': 'medusa',
         'USER': 'medusa',
         'PASSWORD': 'medusa@psql',

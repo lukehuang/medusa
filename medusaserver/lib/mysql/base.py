@@ -274,6 +274,9 @@ class DatabaseWrapper(BaseDatabaseWrapper):
 
     def get_new_connection(self, conn_params):
         conn = Database.connect(**conn_params)
+        print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+        print '(new_connection: %s)' % id(conn)
+        print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
         conn.encoders[SafeText] = conn.encoders[six.text_type]
         conn.encoders[SafeBytes] = conn.encoders[bytes]
         return conn
