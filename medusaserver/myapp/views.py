@@ -5,6 +5,8 @@ import os
 import datetime
 import random
 import json
+import multiprocessing
+import threading
 
 from django.conf import settings
 from django.http import HttpResponse
@@ -189,3 +191,27 @@ class SentryLogTestView(View):
                 }
             )
         return HttpResponse()
+
+
+
+
+class ProcessThreadView(View):
+    """
+    Django threads:
+    [1] runserver (the development server) starts a new thread for every request;
+    [2] gunicorn reuses threads across requests;
+    """
+    def get(self, request, *args, **kwargs):
+        print '================================================================================'
+        process = multiprocessing.current_process()
+        thread = threading.current_thread()
+        dt = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S:%f')
+        process_thread_info = '(datetime=%s) [Process: %s %s %s] [Thread: %s %s %s]' % \
+                              (
+                                  dt,
+                                  process.name, process.pid, id(process),
+                                  thread.getName(), thread.ident, id(thread),
+                              )
+        print process_thread_info
+        print '================================================================================'
+        return HttpResponse(process_thread_info)
