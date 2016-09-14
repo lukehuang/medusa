@@ -108,9 +108,6 @@ TEMPLATES_JINJA2 = [
     },
 ]
 
-# TEMPLATES = TEMPLATES_DJANGO
-TEMPLATES = TEMPLATES_JINJA2
-
 
 WSGI_APPLICATION = 'medusaserver.wsgi.application'
 
@@ -193,7 +190,6 @@ DATABASES_POSTGRESQL = {
     }
 }
 
-DATABASES = DATABASES_POSTGRESQL
 
 CACHES = {
     'default': {
@@ -304,4 +300,10 @@ RAVEN_CONFIG = {
     # If you are using git, you can also automatically configure the release based on the git info.
     # 'release': raven.fetch_git_sha(os.path.dirname(__file__)),
 }
+# ====================================================================================================
+TEMPLATES = TEMPLATES_DJANGO
+# TEMPLATES = TEMPLATES_JINJA2
+
+# DATABASES = DATABASES_MYSQL
+DATABASES = DATABASES_POSTGRESQL
 # ====================================================================================================

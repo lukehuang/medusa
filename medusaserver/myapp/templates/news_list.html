@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <title>News</title>
+    <h3>News</h3>
+{% endblock %}
+
+{% block body %}
+
+{# Django1.3 + coffin #}
+{#<form class="" method="get" action="{% url news_list %}">#}
+{# Django1.8 Jinja2 (with environment set) #}
+<form class="" method="get" action="{{ url('news_list') }}">
+    {# {% csrf_token %} #}
+    <div class="">
+        <input class="" type="text" name="keyword" placeholder="" value="{{ keyword or '' }}">
+        <button class="btn btn-default" type="submit">Search</button>
+    </div>
+</form>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <td>ID</td>
+            <th>图片</th>
+            <th>标题</th>
+            <th>来源频道</th>
+            <th>详情</th>
+            <th>发布时间</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for news in page.object_list %}
+        <tr>
+            <td>{{ news.id }}</td>
+            <td>
+                <img src="{{ news.img }}" height="120" width="160">
+            </td>
+            <td><a href="{{ news.link }}">{{ news.title }}</a></td>
+            <td>{{ news.source }}<br>{{ news.channel_name }}({{ news.channel_id }})</td>
+            <td>{{ news.desc }}</td>
+            <td>{{ news.datetime_publish }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% include "pagination_jinja.html" %}
+
+{% endblock %}
