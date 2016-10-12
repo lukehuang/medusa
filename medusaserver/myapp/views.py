@@ -196,7 +196,7 @@ class SentryLogTestView(View):
             import logging
             logger = logging.getLogger('sentry')
             logger.error(
-                msg='ERROR: %s' % str("This is from logging.getLogger('root').error(): %s" % str(e)),
+                msg='ERROR: %s' % str("This is from logging.getLogger('sentry').error(): %s" % str(e)),
                 exc_info=True,
                 extra={
                 'request': request,  # Optionally pass a request and we'll grab any information we can
