@@ -194,7 +194,7 @@ class SentryLogTestView(View):
             with the addition of an optional request key in the extra data:
             """
             import logging
-            logger = logging.getLogger('root')
+            logger = logging.getLogger('sentry')
             logger.error(
                 msg='ERROR: %s' % str("This is from logging.getLogger('root').error(): %s" % str(e)),
                 exc_info=True,

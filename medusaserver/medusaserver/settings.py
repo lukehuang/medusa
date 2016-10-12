@@ -230,17 +230,18 @@ LOGGING = {
         },
     },
     'handlers': {
-        'sentry': {
-            'level': 'ERROR', # To capture more than ERROR, change to WARNING, INFO, etc.
-            'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
-            'formatter': 'verbose',
-            'tags': {'custom-tag': 'x'},
-        },
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
             'formatter': 'verbose'
-        }
+        },
+        'sentry': {
+            # 'level': 'ERROR',  # To capture more than ERROR, change to WARNING, INFO, etc.
+            'level': 'INFO',  # To capture more than ERROR, change to WARNING, INFO, etc.
+            'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
+            'formatter': 'verbose',
+            'tags': {'custom-tag': 'x'},
+        },
     },
     'loggers': {
         'root': {
@@ -261,6 +262,11 @@ LOGGING = {
             'level': 'DEBUG',
             'handlers': ['console'],
             'propagate': False,
+        },
+        'sentry': {
+            'level': 'INFO',
+            'handlers': ['sentry'],
+            'propagate': True,
         },
     },
 }
