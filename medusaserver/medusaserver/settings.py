@@ -255,6 +255,13 @@ LOGGING = {
             # 'address': ('127.0.0.1', 514),
             # 'address': '/home/vagrant/rsyslog/medusa.log',
         },
+        # FileHandler
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'formatter': 'verbose',
+            'filename': '/home/vagrant/rsyslog/medusa_file.log',
+        },
     },
     'loggers': {
         'root': {
@@ -285,7 +292,8 @@ LOGGING = {
         # rsyslog
         'rsyslog': {
             'level': 'DEBUG',
-            'handlers': ['rsyslog'],
+            # 'handlers': ['rsyslog'],
+            'handlers': ['file', 'rsyslog'],
             'propagate': True,
         },
     },
