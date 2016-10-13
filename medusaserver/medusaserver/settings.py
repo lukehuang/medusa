@@ -221,6 +221,8 @@ TIME_ZONE = 'Asia/Shanghai'
 #     }
 # }
 
+from logging.handlers import SysLogHandler
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
@@ -235,12 +237,21 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'verbose'
         },
+        # sentry
         'sentry': {
             # 'level': 'ERROR',  # To capture more than ERROR, change to WARNING, INFO, etc.
             'level': 'INFO',  # To capture more than ERROR, change to WARNING, INFO, etc.
             'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
             'formatter': 'verbose',
             'tags': {'custom-tag': 'x'},
+        },
+        # rsyslog
+        'rsyslog': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.SysLogHandler',
+            'formatter': 'verbose',
+            'facility': SysLogHandler.LOG_LOCAL4,
+            'address': '/home/vagrant/rsyslog/medusa.log',
         },
     },
     'loggers': {
@@ -263,9 +274,16 @@ LOGGING = {
             'handlers': ['console'],
             'propagate': False,
         },
+        # sentry
         'sentry': {
             'level': 'INFO',
             'handlers': ['sentry'],
+            'propagate': True,
+        },
+        # rsyslog
+        'rsyslog': {
+            'level': 'DEBUG',
+            'handlers': ['rsyslog'],
             'propagate': True,
         },
     },

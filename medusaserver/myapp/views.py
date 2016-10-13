@@ -7,6 +7,7 @@ import random
 import json
 import multiprocessing
 import threading
+import logging
 
 from django.conf import settings
 from django.http import HttpResponse
@@ -227,3 +228,16 @@ class ProcessThreadView(View):
         print process_thread_info
         print '================================================================================'
         return HttpResponse(process_thread_info)
+
+
+
+
+class RsyslogView(View):
+    """
+    测试 rsyslog
+    """
+    def get(self, request, *args, **kwargs):
+        msg = 'This is a rsyslog : ' % datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S:%f')
+        rsyslogger = logging.getLogger('rsyslog')
+        rsyslogger.info(msg)
+        return HttpResponse(msg)

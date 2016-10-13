@@ -24,4 +24,7 @@ urlpatterns = [
 
     # 测试 Django process thread
     url('^thread/$', views.ProcessThreadView.as_view(), name='test_process_thread'),
+
+    # 测试 rsyslog
+    url('^rsyslog/$', views.RsyslogView.as_view(), name='test_rsyslog'),
 ]
