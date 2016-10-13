@@ -251,7 +251,9 @@ LOGGING = {
             'class': 'logging.handlers.SysLogHandler',
             'formatter': 'verbose',
             'facility': SysLogHandler.LOG_LOCAL4,
-            'address': '/home/vagrant/rsyslog/medusa.log',
+            'address': ('localhost', 514),
+            # 'address': ('127.0.0.1', 514),
+            # 'address': '/home/vagrant/rsyslog/medusa.log',
         },
     },
     'loggers': {
