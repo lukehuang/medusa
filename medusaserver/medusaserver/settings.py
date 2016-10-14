@@ -238,6 +238,9 @@ LOGGING = {
                 '%(thread)d %(threadName)s '
                 '[%(message)s]',
         },
+        'raw': {
+            'format': '%(message)s',
+        },
     },
     'handlers': {
         'console': {
@@ -257,7 +260,8 @@ LOGGING = {
         'rsyslog': {
             'level': 'DEBUG',
             'class': 'logging.handlers.SysLogHandler',
-            'formatter': 'verbose',
+            # 'formatter': 'verbose',
+            'formatter': 'raw',
             'facility': SysLogHandler.LOG_LOCAL4,
             'address': ('localhost', 514),
             # 'address': ('127.0.0.1', 514),
@@ -267,7 +271,8 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'formatter': 'verbose',
+            # 'formatter': 'verbose',
+            'formatter': 'raw',
             'filename': '/home/vagrant/rsyslog/medusa_file.log',
         },
     },
