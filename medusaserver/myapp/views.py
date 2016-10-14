@@ -237,8 +237,13 @@ class RsyslogView(View):
     测试 rsyslog
     """
     def get(self, request, *args, **kwargs):
-        msg = 'This is a rsyslog : %s' % datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S:%f')
         rsyslogger = logging.getLogger('rsyslog')
         print '>>>>>>>>>> rsyslogger: ', rsyslogger
+
+        msg = 'tag1 This is a rsyslog : %s' % datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S:%f')
         rsyslogger.info(msg)
+
+        msg = 'tag2 This is a rsyslog : %s' % datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S:%f')
+        rsyslogger.info(msg)
+
         return HttpResponse(msg)
