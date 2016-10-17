@@ -246,4 +246,9 @@ class RsyslogView(View):
         msg = 'tag2 This is a rsyslog : %s' % datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S:%f')
         rsyslogger.info(msg)
 
+        # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        from lib.rsyslog.rsyslog_utils import send_log
+        send_log('tag3', 'This is a message with tag: tag3, datetime is %s' % datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S:%f'))
+        # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
         return HttpResponse(msg)
