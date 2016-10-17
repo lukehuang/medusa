@@ -239,7 +239,7 @@ LOGGING = {
                 '[%(message)s]',
         },
         'raw': {
-            'format': '%(message)s',
+            'format': '%(levelname)s %(message)s',
         },
     },
     'handlers': {
