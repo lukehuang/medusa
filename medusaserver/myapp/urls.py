@@ -27,4 +27,7 @@ urlpatterns = [
 
     # 测试 rsyslog
     url('^rsyslog/$', views.RsyslogView.as_view(), name='test_rsyslog'),
+
+    # 测试 timeout
+    url('^timeout/$', views.TimeoutView.as_view(), name='test_timeout'),
 ]

@@ -2,6 +2,7 @@
 # coding:utf-8
 
 import os
+import time
 import datetime
 import random
 import json
@@ -252,3 +253,15 @@ class RsyslogView(View):
         # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
         return HttpResponse(msg)
+
+
+
+
+class TimeoutView(View):
+    """
+    测试 Timeout
+    """
+    def get(self, request, *args, **kwargs):
+        sleep_time = 5
+        time.sleep(sleep_time)
+        return HttpResponse('Sleep Time = %s' % sleep_time)
