@@ -2,7 +2,7 @@ server {
     listen 80 default_server;
     server_name medusaserver.com;
 
-    access_log /var/log/nginx/medusaserver.com-access.log;
+    access_log /var/log/nginx/medusaserver.com-access.log format_combined;
     error_log /var/log/nginx/medusaserver.com-error.log;
 
     location /static {
