@@ -1,5 +1,5 @@
 upstream medusaserver {
-    server 127.0.0.1:8000 fail_timeout=3;
+    server 127.0.0.1:8000;
 }
 
 server {
@@ -14,9 +14,12 @@ server {
     }
 
     location / {
-         proxy_pass http://medusaserver;
-         proxy_set_header Host $host;
-         proxy_set_header X-Real-IP $remote_addr;
-         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        # (这里才是真正对代理后端生效的超时设置)(proxy_read_timeout)
+        proxy_read_timeout 3s;
+
+        proxy_pass http://medusaserver;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
 }
