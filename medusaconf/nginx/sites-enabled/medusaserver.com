@@ -6,16 +6,22 @@ server {
     listen 80 default_server;
     server_name medusaserver.com;
 
-    # 如果不添加单独的 access_log & error_log 配置, 则会使用 nginx.conf 中的配置:
-    access_log /var/log/nginx/medusaserver.com-access.log format_combined;
-    error_log /var/log/nginx/medusaserver.com-error.log;
+    # if no access_log & error_log here, will use config in nginx.conf:
+    # access_log /var/log/nginx/medusaserver.com-access.log format_combined;
+    # error_log /var/log/nginx/medusaserver.com-error.log;
+
+    # send to rsyslog
+    # access_log syslog:server=127.0.0.1:514,facility=local7,tag=nginx,severity=debug format_combined;
+    access_log syslog:server=192.168.100.100:514,facility=local2,severity=info,tag=nginx format_combined;
+
+
 
     location /static {
         root /home/workspace/;
     }
 
     location / {
-        # (这里才是真正对代理后端生效的超时设置)(proxy_read_timeout)
+        # (this is the real timeout config for upstream server)(proxy_read_timeout)
         proxy_read_timeout 3s;
 
         proxy_pass http://medusaserver;
