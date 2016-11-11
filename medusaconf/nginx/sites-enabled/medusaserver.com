@@ -10,6 +10,10 @@ server {
     # access_log /var/log/nginx/medusaserver.com-access.log format_combined;
     # error_log /var/log/nginx/medusaserver.com-error.log;
 
+    # nginx access_log & error_log can be configured multiple times for multiple logs:
+    access_log /var/log/nginx/medusaserver.com-access.log format_combined;
+    error_log /var/log/nginx/medusaserver.com-error.log;
+
     # nginx send log to rsyslog (OK)
     access_log syslog:server=127.0.0.1:514,facility=local2,severity=info,tag=nginx format_combined;
 
