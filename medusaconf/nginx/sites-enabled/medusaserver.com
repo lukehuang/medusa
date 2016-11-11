@@ -10,11 +10,8 @@ server {
     # access_log /var/log/nginx/medusaserver.com-access.log format_combined;
     # error_log /var/log/nginx/medusaserver.com-error.log;
 
-    # send to rsyslog
-    # access_log syslog:server=127.0.0.1:514,facility=local7,tag=nginx,severity=debug format_combined;
-    access_log syslog:server=192.168.100.100:514,facility=local2,severity=info,tag=nginx format_combined;
-
-
+    # nginx send log to rsyslog (OK)
+    access_log syslog:server=127.0.0.1:514,facility=local2,severity=info,tag=nginx format_combined;
 
     location /static {
         root /home/workspace/;
