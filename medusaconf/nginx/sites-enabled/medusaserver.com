@@ -7,8 +7,8 @@ server {
     server_name medusaserver.com;
 
     # 如果不添加单独的 access_log & error_log 配置, 则会使用 nginx.conf 中的配置:
-    # access_log /var/log/nginx/medusaserver.com-access.log format_combined;
-    # error_log /var/log/nginx/medusaserver.com-error.log;
+    access_log /var/log/nginx/medusaserver.com-access.log format_combined;
+    error_log /var/log/nginx/medusaserver.com-error.log;
 
     location /static {
         root /home/workspace/;
