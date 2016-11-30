@@ -16,8 +16,6 @@ for key in range(20):
     ns.append(ch.get_node(str(key)))
 print ns
 print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-# nodes = range(11)
-# print nodes
 ch.add_nodes(range(10, 15, 1))
 
 ns = []
