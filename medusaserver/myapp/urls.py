@@ -30,4 +30,7 @@ urlpatterns = [
 
     # 测试 timeout
     url('^timeout/$', views.TimeoutView.as_view(), name='test_timeout'),
+
+    # 测试 Mako Template
+    url('^test/mako/$', views.MakoView.as_view(), name='test_mako'),
 ]

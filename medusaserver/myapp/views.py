@@ -265,3 +265,19 @@ class TimeoutView(View):
         sleep_time = 5
         time.sleep(sleep_time)
         return HttpResponse('Sleep Time = %s' % sleep_time)
+
+
+
+
+class MakoView(View):
+    """
+    测试 Mako Template
+    """
+    def get(self, request, *args, **kwargs):
+        # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        from mako.template import Template
+        template = Template(filename='/home/workspace/medusa/medusaserver/myapp/templates/mako.html')
+        context = {'k': 'v'}
+        print template.render(data=context)
+        return HttpResponse(template.render(data=context))
+        # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
