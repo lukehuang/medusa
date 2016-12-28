@@ -276,8 +276,10 @@ class MakoView(View):
     def get(self, request, *args, **kwargs):
         # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         from mako.template import Template
-        template = Template(filename='/home/workspace/medusa/medusaserver/myapp/templates/mako.html')
-        context = {'k': 'v'}
+        template = Template(
+            filename='/home/workspace/medusa/medusaserver/myapp/templates/mako.html',
+        )
+        context = {'key': 'value'}
         print template.render(data=context)
         return HttpResponse(template.render(data=context))
         # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
