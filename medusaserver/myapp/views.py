@@ -275,11 +275,28 @@ class MakoView(View):
     """
     def get(self, request, *args, **kwargs):
         # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        # [1] (utf-8 template not supported)
+        # from mako.template import Template
+        # template = Template(
+        #     filename='/home/workspace/medusa/medusaserver/myapp/templates/mako.html',
+        # )
+        # context = {'key': 'value'}
+        # print template.render(data=context)
+        # return HttpResponse(template.render(data=context))
+        # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        # [2]
         from mako.template import Template
-        template = Template(
-            filename='/home/workspace/medusa/medusaserver/myapp/templates/mako.html',
+        from mako.lookup import TemplateLookup
+        template_path = '/home/workspace/medusa/medusaserver/myapp/templates'
+        lookup = TemplateLookup(
+            directories=[template_path],
+            module_directory='/home/workspace/medusa/medusaserver/myapp/templates/mako_modules',
+            input_encoding='utf-8',
+            output_encoding='utf-8',
         )
+        template = lookup.get_template('mako.html')
         context = {'key': 'value'}
-        print template.render(data=context)
-        return HttpResponse(template.render(data=context))
+        html = template.render(data=context)
+        print html
+        return HttpResponse(html)
         # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
