@@ -300,3 +300,55 @@ class MakoView(View):
         print html
         return HttpResponse(html)
         # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+
+class NewsMakoView(View):
+    """
+    新闻列表(Mako Template)
+    """
+    def get(self, request, *args, **kwargs):
+        # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        # 关键字参数和分页参数
+        keyword = request.GET.get('keyword')
+        page = request.GET.get('page', 1)
+        # 查询数据库
+        news = News.objects.order_by('-datetime_updated')
+        # 过滤掉没有图片的新闻条目
+        news = news.filter(img__isnull=False)
+        if keyword:
+            strict = Q(title__icontains=keyword) | \
+                     Q(desc__icontains=keyword)
+            news = news.filter(strict)
+            pass
+        # 分页
+        paginator = Paginator(object_list=news, per_page=10)
+        try:
+            pager = paginator.page(page)
+        except PageNotAnInteger:
+            pager = paginator.page(1)
+        except EmptyPage:
+            pager = paginator.page(paginator.num_pages)
+            pass
+        # 分页片段中使用 pager.queries 达到在翻页时带着查询参数的目的
+        pager.queries = "keyword=%s" % (keyword or '',)
+        # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        from mako.template import Template
+        from mako.lookup import TemplateLookup
+        template_path = '/home/workspace/medusa/medusaserver/myapp/templates'
+        lookup = TemplateLookup(
+            directories=[template_path],
+            module_directory='/home/workspace/medusa/medusaserver/myapp/templates/mako_modules',
+            input_encoding='utf-8',
+            output_encoding='utf-8',
+        )
+        template = lookup.get_template('news_list_mako.html')
+        # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        # [网页模板]和[通用分页片段(pagination_mako.html)]中使用 "page" 来访问 Page object
+        context = dict()
+        context['keyword'] = keyword
+        context['page'] = pager
+        html = template.render(**context)
+        return HttpResponse(html)
+        # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

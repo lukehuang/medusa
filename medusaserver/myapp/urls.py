@@ -33,4 +33,5 @@ urlpatterns = [
 
     # 测试 Mako Template
     url('^test/mako/$', views.MakoView.as_view(), name='test_mako'),
+    url('^test/mako/news/$', views.NewsMakoView.as_view(), name='test_mako_news'),
 ]
