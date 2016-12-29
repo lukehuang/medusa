@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="/static/bootstrap/bootstrap.min.css">
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="/static/bootstrap/bootstrap-theme.min.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="/static/bootstrap/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="/static/bootstrap/bootstrap.min.js"></script>
+
+    <!-- jsTree -->
+    <link rel="stylesheet" href="/static/jstree/themes/default/style.min.css" />
+    <script src="/static/jstree/jquery.min.js"></script>
+    <script src="/static/jstree/jstree.min.js"></script>
+
+    <!-- echarts -->
+    <script src="/static/echarts/echarts-all.js"></script>
+
+    <div class="container-fluid">
+        <title>News</title>
+        <h3>News</h3>
+    </div>
+</head>
+<body>
+    <div class="container-fluid">
+
+        <form class="" method="get" action="">
+            <div class="">
+                <input class="" type="text" name="keyword" placeholder="" value="${ keyword or '' }">
+                <button class="btn btn-default" type="submit">Search</button>
+            </div>
+        </form>
+
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <th>图片</th>
+                    <th>标题</th>
+                    <th>来源频道</th>
+                    <th>详情</th>
+                    <th>发布时间</th>
+                </tr>
+            </thead>
+            <tbody>
+                ## {% for news in page.object_list %}
+                % for news in page.object_list:
+                <tr>
+                    ## <td>{{ news.id }}</td>
+                    <td>${ news.id }</td>
+                    <td>
+                        ## <img src="{{ news.img }}" height="120" width="160">
+                        <img src="${ news.img }" height="120" width="160">
+                    </td>
+                    ## <td><a href="{{ news.link }}">{{ news.title }}</a></td>
+                    <td><a href="${ news.link }">${ news.title }</a></td>
+                    ## <td>{{ news.source }}<br>{{ news.channel_name }}({{ news.channel_id }})</td>
+                    <td>${ news.source }<br>${ news.channel_name }(${ news.channel_id })</td>
+                    ## <td>{{ news.desc }}</td>
+                    <td>${ news.desc }</td>
+                    ## <td>{{ news.datetime_publish }}</td>
+                    <td>${ news.datetime_publish }</td>
+                </tr>
+                ## {% endfor %}
+                % endfor
+            </tbody>
+        </table>
+
+        ## {% include "pagination_mako.html" %}
+        <%include file="pagination_mako.html"/>
+
+    </div>
+</body>
+</html>
