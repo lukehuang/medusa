@@ -34,4 +34,7 @@ urlpatterns = [
     # 测试 Mako Template
     url('^test/mako/$', views.MakoView.as_view(), name='test_mako'),
     url('^test/mako/news/$', views.NewsMakoView.as_view(), name='test_mako_news'),
+
+    # 测试 backbone.js
+    url('^test/backbone/$', views.BackboneMakoView.as_view(), name='test_backbone'),
 ]

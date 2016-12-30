@@ -275,17 +275,19 @@ class MakoView(View):
     """
     def get(self, request, *args, **kwargs):
         # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        # [1] (utf-8 template not supported)
+        # [1] Template
         # from mako.template import Template
         # template = Template(
         #     filename='/home/workspace/medusa/medusaserver/myapp/templates/mako.html',
+        #     input_encoding='utf-8',
+        #     output_encoding='utf-8',
         # )
         # context = {'key': 'value'}
-        # print template.render(data=context)
-        # return HttpResponse(template.render(data=context))
+        # html = template.render(data=context)
+        # print html
+        # return HttpResponse(html)
         # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        # [2]
-        from mako.template import Template
+        # [2] TemplateLookup
         from mako.lookup import TemplateLookup
         template_path = '/home/workspace/medusa/medusaserver/myapp/templates'
         lookup = TemplateLookup(
@@ -350,5 +352,26 @@ class NewsMakoView(View):
         context['keyword'] = keyword
         context['page'] = pager
         html = template.render(**context)
+        return HttpResponse(html)
+        # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+
+class BackboneMakoView(View):
+    """
+    测试 Backbone
+    """
+    def get(self, request, *args, **kwargs):
+        # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        from mako.template import Template
+        template = Template(
+            filename='/home/workspace/medusa/medusaserver/myapp/templates/backbone.html',
+            input_encoding='utf-8',
+            output_encoding='utf-8',
+        )
+        context = {'key': 'value'}
+        html = template.render(data=context)
+        print html
         return HttpResponse(html)
         # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
