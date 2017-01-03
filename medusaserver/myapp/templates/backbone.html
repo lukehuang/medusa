@@ -70,17 +70,6 @@
             var News = Backbone.Model.extend({
                 // url: "http://192.168.100.100:8000/api/news/?format=json",
                 url: "/api/news/?format=json",
-                info: function(){
-                    return this.get('id') + ' ' +
-                            this.get('img') + ' ' +
-                            this.get('link') + ' ' +
-                            this.get('title') + ' ' +
-                            this.get('source') + ' ' +
-                            this.get('channel_name') + ' ' +
-                            this.get('channel_id') + ' ' +
-                            this.get('desc') + ' ' +
-                            this.get('datetime_publish');
-                },
                 initialize: function(){
                     // 根据接口返回数据初始化页面
                     this.fetch({
@@ -106,7 +95,9 @@
                                 if (!tr) {
                                     tr = document.createElement('tr');
                                     tr.setAttribute('id', 'id_' + news_list[i]['id']);
-                                    tr.innerHTML = '<td>' + news_list[i]['title'] + '</td>';
+                                    tr.innerHTML = '<td>' + news_list[i]['id'] + '</td>';
+                                    tr.innerHTML += '<td><img src="' + news_list[i]['img'] + '" height="120" width="160"></td>';
+                                    tr.innerHTML += '<td>' + news_list[i]['title'] + '</td>';
                                     tbody.appendChild(tr);
                                 }
                             }
