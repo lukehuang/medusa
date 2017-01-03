@@ -66,6 +66,103 @@
 
 
     <script>
+        (function($){
+            var News = Backbone.Model.extend({
+                // url: "http://192.168.100.100:8000/api/news/?format=json",
+                url: "/api/news/?format=json",
+                initialize: function(){
+                    // alert('[News] Created');
+                    console.log('[News] Created');
+                    // 初始化时绑定监听
+                    this.bind("change:name", function(){
+                        var name = this.get('name');
+                        // alert("You changed attribute name = " + name);
+                        console.log("You changed attribute : name=" + name);
+                    });
+                    // 为对象添加验证规则和错误提示
+                    this.bind("invalid",function(model,error){
+                        // alert(model);
+                        alert(error);
+                    });
+                },
+                defaults: {
+                    'name': 'Tony',
+                    'age': '35'
+                },
+                validate: function(attributes){
+                    if(attributes.name == ''){
+                        return 'name can NOT be blank !!!'
+                    }
+                },
+                info: function(){
+                    return 'My Name is ' + this.get('name') + ', My Age is' + this.get('age');
+                }
+            });
+
+
+            var news = new News();
+            //alert(news.info());
+            console.log(news.info());
+            //触发绑定的change事件, alert
+            news.set({'name': 'Clark'});
+            //触发绑定的change事件, alert
+            news.set({'name': 'Bruce'});
+            //触发绑定的change事件, alert
+            //默认set时不进行验证
+            news.set({'name': ''});
+            //触发绑定的change事件, alert
+            //手动触发验证, set时会触发
+            news.set({'name': ''}, {'validate':true});
+
+
+            var news = new News();
+            news.fetch({
+                success: function(model, response){
+                    alert('fetch success');
+                    //response为获取到的数据
+                    console.log(model);
+                    console.log(response);
+                    //alert(response['results'][0]['title']);
+                },
+                error: function(){
+                    alert('fetch error');
+                }
+            });
+
+
+        })(jQuery);
+    </script>
+
+
+
+
+    <script>
+##         var News = Backbone.Model.extend({
+##             url: "http://192.168.100.100:8000/api/news/?format=json",
+##             parse: function(response) {
+##                 // alert(response);
+##                 console.log(response);
+##                 return (response[0]);
+##             }
+##         });
+##         var news = new News();
+##
+##         news.on('change', function(model) {
+##             var table = document.getElementById("id_table");
+##             var thead = table.children[0];
+##             console.log(thead);
+##             var tbody = table.children[1];
+##             console.log(tbody);
+##             var tr = document.getelementbyid(model.get("id"));
+##             if (!tr) {
+##                 tr = document.createElement('tr');
+##                 tr.setAttribute('id', model.get('id'));
+##                 tr.innerHTML = '<td>' + model.get('title') + '</td>';
+##                 tbody.appendChild(tr);
+##             }
+##         });
+##
+##         news.fetch();
     </script>
 
 </body>
