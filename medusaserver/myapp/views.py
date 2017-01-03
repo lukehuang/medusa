@@ -367,7 +367,8 @@ class BackboneMakoView(View):
         from mako.template import Template
         template = Template(
             # filename='/home/workspace/medusa/medusaserver/myapp/templates/backbone_model.html',
-            filename='/home/workspace/medusa/medusaserver/myapp/templates/backbone_collection.html',
+            # filename='/home/workspace/medusa/medusaserver/myapp/templates/backbone_collection.html',
+            filename='/home/workspace/medusa/medusaserver/myapp/templates/backbone_view.html',
             input_encoding='utf-8',
             output_encoding='utf-8',
         )
