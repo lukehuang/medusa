@@ -65,51 +65,40 @@
 
     <script>
         (function($){
+
             var News = Backbone.Model.extend({
                 // url: "http://192.168.100.100:8000/api/news/?format=json",
+                // url: "/api/news/?format=json",
+                initialize: function(){
+                    console.log('initialize: News');
+                }
+            });
+
+            var NewsCollection = Backbone.Collection.extend({
+                model: News,
                 url: "/api/news/?format=json",
                 initialize: function(){
-                    // 根据接口返回数据初始化页面
+                    console.log('initialize: NewsCollection');
                     this.fetch({
-                        success: function(model, response){
+                        success: function(collection, response, options){
                             alert('fetch success');
-                            //response为获取到的数据
-                            console.log(model);
+                            // console.log(typeof(collection));
+                            console.log(collection);
+                            // console.log(typeof(response));
                             console.log(response);
-                            news_list = model.get('results');
-                            console.log(news_list);
+                            // console.log(typeof(options));
+                            console.log(options);
 
-                            // 根据接口返回数据初始化页面
-                            var table = document.getElementById("id_table");
-                            var thead = table.children[0];
-                            console.log(thead);
-                            var tbody = table.children[1];
-                            console.log(tbody);
-
-
-                            for(var i=0;i<news_list.length;i++){
-                                console.log(news_list[i]);
-                                var tr = document.getElementById('id_' + news_list[i]['id']);
-                                if (!tr) {
-                                    tr = document.createElement('tr');
-                                    tr.setAttribute('id', 'id_' + news_list[i]['id']);
-                                    tr.innerHTML = '<td>' + news_list[i]['id'] + '</td>';
-                                    tr.innerHTML += '<td><img src="' + news_list[i]['img'] + '" height="120" width="160"></td>';
-                                    tr.innerHTML += '<td>' + news_list[i]['title'] + '</td>';
-                                    tbody.appendChild(tr);
-                                }
-                            }
-
-
+                            // ??????????
                         },
-                        error: function(){
+                        error: function(collection, response, options){
                             alert('fetch error');
                         }
                     });
                 }
             });
 
-            var news = new News();
+            var newscollection = new NewsCollection();\
 
         })(jQuery);
     </script>
