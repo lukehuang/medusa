@@ -28,9 +28,42 @@
 </head>
 <body>
     <h3>backbone.js</h3>
+
     <div class="container-fluid">
         ## ${ data['key'] }
     </div>
+
+    <div class="container-fluid">
+        <table class="table table-bordered table-striped" id="id_table">
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <th>图片</th>
+                    <th>标题</th>
+                    <th>来源频道</th>
+                    <th>详情</th>
+                    <th>发布时间</th>
+                </tr>
+            </thead>
+            <tbody>
+##                 {% for news in page.object_list %}
+##                 <tr>
+##                     <td>{{ news.id }}</td>
+##                     <td>
+##                         <img src="{{ news.img }}" height="120" width="160">
+##                     </td>
+##                     <td><a href="{{ news.link }}">{{ news.title }}</a></td>
+##                     <td>{{ news.source }}<br>{{ news.channel_name }}({{ news.channel_id }})</td>
+##                     <td>{{ news.desc }}</td>
+##                     <td>{{ news.datetime_publish }}</td>
+##                 </tr>
+##                 {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
 
     <script>
     </script>
