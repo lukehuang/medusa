@@ -1,3 +1,4 @@
+## coding=utf-8
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -75,26 +76,33 @@
 ##       <%static:include path="backbone_view.underscore" />
 ##     </script>
 
-
     <script>
         (function($){
             var NewsView = Backbone.View.extend({
                 el: $("#id_container"),
                 initialize: function(){
                     console.log('NewsView initialized');
+                    this.render({
+                        search_label: "搜索渲染"
+                    });
                 },
                 render: function(context){
                     //使用 underscore 编译模板
                     var template = _.template($("#id_template").html());
                     //加载模板到对应的 el 属性中
                     $(this.el).html(template(context));
+                },
+                events: {
+                    'click input[type=button]' : 'doSearch'
+                },
+                doSearch: function(event){
+                    console.log('event=');
+                    console.log(event);
+                    alert("search for " + $("#search_input").val());
                 }
             });
 
             var newsView = new NewsView();
-            newsView.render({
-                search_label: "搜索渲染"
-            });
 
         })(jQuery);
     </script>
