@@ -34,18 +34,7 @@
                 </tr>
             </thead>
             <tbody>
-##                 {% for news in page.object_list %}
-##                 <tr>
-##                     <td>{{ news.id }}</td>
-##                     <td>
-##                         <img src="{{ news.img }}" height="120" width="160">
-##                     </td>
-##                     <td><a href="{{ news.link }}">{{ news.title }}</a></td>
-##                     <td>{{ news.source }}<br>{{ news.channel_name }}({{ news.channel_id }})</td>
-##                     <td>{{ news.desc }}</td>
-##                     <td>{{ news.datetime_publish }}</td>
-##                 </tr>
-##                 {% endfor %}
+
             </tbody>
         </table>
     </div>
@@ -56,18 +45,73 @@
     <div id="id_container"></div>
 
     <script type="text/template" id="id_template">
-        <label><%= key %></label>
+{#        <label><%= key %></label>#}
         <input type="text" id="id_input" />
         <input type="button" id="id_button" value="Submit" />
     </script>
 
 
+
+
     <script>
         (function($){
+
+            var News = Backbone.Model.extend({
+                url: "/api/news/?format=json",
+                initialize: function(){
+                    // 根据接口返回数据初始化页面
+                    this.update();
+                },
+                update: function(){
+                    this.fetch({
+                        success: function(model, response){
+                            console.log('fetch success');
+                            //response为获取到的数据
+                            console.log(model);
+                            console.log(response);
+                            var news_list = model.get('results');
+                            console.log(news_list);
+
+                            // 根据接口返回数据初始化页面
+                            var table = document.getElementById("id_table");
+                            var thead = table.children[0];
+                            console.log(thead);
+                            var tbody = table.children[1];
+                            console.log(tbody);
+
+                            //
+                            for(var i=0;i<news_list.length;i++){
+                                console.log(news_list[i]);
+                                var tr = document.getElementById('id_' + news_list[i]['id']);
+                                if (!tr) {
+                                    tr = document.createElement('tr');
+                                    tr.setAttribute('id', 'id_' + news_list[i]['id']);
+                                    tr.innerHTML = '<td>' + news_list[i]['id'] + '</td>';
+                                    tr.innerHTML += '<td><img src="' + news_list[i]['img'] + '" height="120" width="160"></td>';
+                                    tr.innerHTML += '<td>' + news_list[i]['title'] + '</td>';
+                                    tbody.appendChild(tr);
+                                }
+                            }
+                            debugger;
+
+
+                        },
+                        error: function(){
+                            alert('fetch error');
+                        }
+                    });
+                }
+            });
+
+
+
+
+
+
             var NewsView = Backbone.View.extend({
                 el: $("#id_container"),
                 initialize: function(){
-                    console.log('NewsView initialized');
+                    console.log('NewsView initialize()');
                     this.render({
                         key: "value"
                     });
@@ -76,8 +120,6 @@
                     //使用 underscore 编译模板
                     var template = _.template($("#id_template").html());
                     //加载模板到对应的 el 属性中
-                    // $(this.el) 等价于 this.$el
-                    // this.$el.html(template(context));
                     $(this.el).html(template(context));
                 },
                 events: {
@@ -90,7 +132,14 @@
                 }
             });
 
+
+
+
+            var news = new News();
             var newsView = new NewsView();
+
+
+
 
         })(jQuery);
     </script>

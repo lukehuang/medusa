@@ -364,16 +364,23 @@ class BackboneMakoView(View):
     """
     def get(self, request, *args, **kwargs):
         # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        from mako.template import Template
-        template = Template(
-            # filename='/home/workspace/medusa/medusaserver/myapp/templates/backbone_model.html',
-            # filename='/home/workspace/medusa/medusaserver/myapp/templates/backbone_collection.html',
-            filename='/home/workspace/medusa/medusaserver/myapp/templates/backbone_view.html',
-            input_encoding='utf-8',
-            output_encoding='utf-8',
-        )
+        # [1] Mako
+        # from mako.template import Template
+        # template = Template(
+        #     # filename='/home/workspace/medusa/medusaserver/myapp/templates/backbone_model.html',
+        #     # filename='/home/workspace/medusa/medusaserver/myapp/templates/backbone_collection.html',
+        #     filename='/home/workspace/medusa/medusaserver/myapp/templates/backbone_view.html',
+        #     input_encoding='utf-8',
+        #     output_encoding='utf-8',
+        # )
+        # context = {'key': 'value'}
+        # html = template.render(data=context)
+        # print html
+        # return HttpResponse(html)
+        # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        # [2] Django
         context = {'key': 'value'}
-        html = template.render(data=context)
-        print html
-        return HttpResponse(html)
+        # template = '/home/workspace/medusa/medusaserver/myapp/templates/backbone_view.html'
+        template = '/home/workspace/medusa/medusaserver/myapp/templates/backbone.html'
+        return render(request, template, context)
         # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
