@@ -37,192 +37,222 @@ print conn
 tables = conn.list_tables()
 print tables
 # {u'TableNames': []}
-
-print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-# Create table
-table = conn.create_table(
-    table_name='Music',
-    key_schema=[
-        {
-            'AttributeName': "Artist",
-            'KeyType': "HASH"
-        },
-        {
-            'AttributeName': "SongTitle",
-            'KeyType': "RANGE"
-        }
-    ],
-    attribute_definitions=[
-        {
-            'AttributeName': "Artist",
-            'AttributeType': "S"
-        },
-        {
-            'AttributeName': "SongTitle",
-            'AttributeType': "S"
-        }
-    ],
-    provisioned_throughput={
-        'ReadCapacityUnits': 1,
-        'WriteCapacityUnits': 1
-    }
-)
-print table
-# {
-#   u'TableDescription': {
-#     u'TableArn': u'arn:aws:dynamodb:ddblocal:000000000000:table/Music',
-#     u'AttributeDefinitions': [
-#       {
-#         u'AttributeName': u'Artist',
-#         u'AttributeType': u'S'
-#       },
-#       {
-#         u'AttributeName': u'SongTitle',
-#         u'AttributeType': u'S'
-#       }
-#     ],
-#     u'ProvisionedThroughput': {
-#       u'NumberOfDecreasesToday': 0,
-#       u'WriteCapacityUnits': 1,
-#       u'LastIncreaseDateTime': 0.0,
-#       u'ReadCapacityUnits': 1,
-#       u'LastDecreaseDateTime': 0.0
-#     },
-#     u'TableSizeBytes': 0,
-#     u'TableName': u'Music',
-#     u'TableStatus': u'ACTIVE',
-#     u'KeySchema': [
-#       {
-#         u'KeyType': u'HASH',
-#         u'AttributeName': u'Artist'
-#       },
-#       {
-#         u'KeyType': u'RANGE',
-#         u'AttributeName': u'SongTitle'
-#       }
-#     ],
-#     u'ItemCount': 0,
-#     u'CreationDateTime': 1486632161.815
-#   }
-# }
-tt = conn.list_tables()
-print tt
 # {u'TableNames': [u'Music']}
 print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+# Create table
+def create_table():
+    if 'Music' not in conn.list_tables()['TableNames']:
+        print '********** create_table'
+        table = conn.create_table(
+            table_name='Music',
+            key_schema=[
+                {
+                    'AttributeName': "Artist",
+                    'KeyType': "HASH"
+                },
+                {
+                    'AttributeName': "SongTitle",
+                    'KeyType': "RANGE"
+                }
+            ],
+            attribute_definitions=[
+                {
+                    'AttributeName': "Artist",
+                    'AttributeType': "S"
+                },
+                {
+                    'AttributeName': "SongTitle",
+                    'AttributeType': "S"
+                }
+            ],
+            provisioned_throughput={
+                'ReadCapacityUnits': 1,
+                'WriteCapacityUnits': 1
+            }
+        )
+        print table
+        # {
+        #   u'TableDescription': {
+        #     u'TableArn': u'arn:aws:dynamodb:ddblocal:000000000000:table/Music',
+        #     u'AttributeDefinitions': [
+        #       {
+        #         u'AttributeName': u'Artist',
+        #         u'AttributeType': u'S'
+        #       },
+        #       {
+        #         u'AttributeName': u'SongTitle',
+        #         u'AttributeType': u'S'
+        #       }
+        #     ],
+        #     u'ProvisionedThroughput': {
+        #       u'NumberOfDecreasesToday': 0,
+        #       u'WriteCapacityUnits': 1,
+        #       u'LastIncreaseDateTime': 0.0,
+        #       u'ReadCapacityUnits': 1,
+        #       u'LastDecreaseDateTime': 0.0
+        #     },
+        #     u'TableSizeBytes': 0,
+        #     u'TableName': u'Music',
+        #     u'TableStatus': u'ACTIVE',
+        #     u'KeySchema': [
+        #       {
+        #         u'KeyType': u'HASH',
+        #         u'AttributeName': u'Artist'
+        #       },
+        #       {
+        #         u'KeyType': u'RANGE',
+        #         u'AttributeName': u'SongTitle'
+        #       }
+        #     ],
+        #     u'ItemCount': 0,
+        #     u'CreationDateTime': 1486632161.815
+        #   }
+        # }
+        #
+        tt = conn.list_tables()
+        print tt
+        # {u'TableNames': [u'Music']}
+print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
 # Describe table
-tt = conn.describe_table('Music')
-print tt
-# {
-#   u'Table': {
-#     u'TableArn': u'arn:aws:dynamodb:ddblocal:000000000000:table/Music',
-#     u'AttributeDefinitions': [
-#       {
-#         u'AttributeName': u'Artist',
-#         u'AttributeType': u'S'
-#       },
-#       {
-#         u'AttributeName': u'SongTitle',
-#         u'AttributeType': u'S'
-#       }
-#     ],
-#     u'ProvisionedThroughput': {
-#       u'NumberOfDecreasesToday': 0,
-#       u'WriteCapacityUnits': 1,
-#       u'LastIncreaseDateTime': 0.0,
-#       u'ReadCapacityUnits': 1,
-#       u'LastDecreaseDateTime': 0.0
-#     },
-#     u'TableSizeBytes': 0,
-#     u'TableName': u'Music',
-#     u'TableStatus': u'ACTIVE',
-#     u'KeySchema': [
-#       {
-#         u'KeyType': u'HASH',
-#         u'AttributeName': u'Artist'
-#       },
-#       {
-#         u'KeyType': u'RANGE',
-#         u'AttributeName': u'SongTitle'
-#       }
-#     ],
-#     u'ItemCount': 0,
-#     u'CreationDateTime': 1486632161.815
-#   }
-# }
-print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-
-
-print '????????????????????????????????????????????????????????????????????????????????'
-# Put item
-item = {
-    "Artist": "No One You Know",
-    "SongTitle": "Call Me Today",
-    "AlbumTitle": "Somewhat Famous",
-    "Year": 2015,
-    "Price": 2.14,
-    "Genre": "Country",
-    "Tags": {
-        "Composers": [
-            "Smith",
-            "Jones",
-            "Davis"
-        ],
-        "LengthInSeconds": 214
-    }
-}
-# r = conn.put_item(
-#     table_name='Music',
-#     item=item
-# )
-# print r
-print '????????????????????????????????????????????????????????????????????????????????'
-
-
-print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+def describe_table():
+    print '********** describe_table'
+    tt = conn.describe_table('Music')
+    print tt
+    # {
+    #   u'Table': {
+    #     u'TableArn': u'arn:aws:dynamodb:ddblocal:000000000000:table/Music',
+    #     u'AttributeDefinitions': [
+    #       {
+    #         u'AttributeName': u'Artist',
+    #         u'AttributeType': u'S'
+    #       },
+    #       {
+    #         u'AttributeName': u'SongTitle',
+    #         u'AttributeType': u'S'
+    #       }
+    #     ],
+    #     u'ProvisionedThroughput': {
+    #       u'NumberOfDecreasesToday': 0,
+    #       u'WriteCapacityUnits': 1,
+    #       u'LastIncreaseDateTime': 0.0,
+    #       u'ReadCapacityUnits': 1,
+    #       u'LastDecreaseDateTime': 0.0
+    #     },
+    #     u'TableSizeBytes': 0,
+    #     u'TableName': u'Music',
+    #     u'TableStatus': u'ACTIVE',
+    #     u'KeySchema': [
+    #       {
+    #         u'KeyType': u'HASH',
+    #         u'AttributeName': u'Artist'
+    #       },
+    #       {
+    #         u'KeyType': u'RANGE',
+    #         u'AttributeName': u'SongTitle'
+    #       }
+    #     ],
+    #     u'ItemCount': 0,
+    #     u'CreationDateTime': 1486632161.815
+    #   }
+    # }
 print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
 # Delete table
-description = conn.delete_table('Music')
-print description
-# {
-#   u'TableDescription': {
-#     u'TableArn': u'arn:aws:dynamodb:ddblocal:000000000000:table/Music',
-#     u'AttributeDefinitions': [
-#       {
-#         u'AttributeName': u'Artist',
-#         u'AttributeType': u'S'
-#       },
-#       {
-#         u'AttributeName': u'SongTitle',
-#         u'AttributeType': u'S'
-#       }
-#     ],
-#     u'ProvisionedThroughput': {
-#       u'NumberOfDecreasesToday': 0,
-#       u'WriteCapacityUnits': 1,
-#       u'LastIncreaseDateTime': 0.0,
-#       u'ReadCapacityUnits': 1,
-#       u'LastDecreaseDateTime': 0.0
-#     },
-#     u'TableSizeBytes': 0,
-#     u'TableName': u'Music',
-#     u'TableStatus': u'ACTIVE',
-#     u'KeySchema': [
-#       {
-#         u'KeyType': u'HASH',
-#         u'AttributeName': u'Artist'
-#       },
-#       {
-#         u'KeyType': u'RANGE',
-#         u'AttributeName': u'SongTitle'
-#       }
-#     ],
-#     u'ItemCount': 0,
-#     u'CreationDateTime': 1486632404.093
-#   }
-# }
+def delete_table():
+    for table in conn.list_tables()['TableNames']:
+        print '********** delete_table', table
+        description = conn.delete_table('Music')
+        print description
+        # {
+        #   u'TableDescription': {
+        #     u'TableArn': u'arn:aws:dynamodb:ddblocal:000000000000:table/Music',
+        #     u'AttributeDefinitions': [
+        #       {
+        #         u'AttributeName': u'Artist',
+        #         u'AttributeType': u'S'
+        #       },
+        #       {
+        #         u'AttributeName': u'SongTitle',
+        #         u'AttributeType': u'S'
+        #       }
+        #     ],
+        #     u'ProvisionedThroughput': {
+        #       u'NumberOfDecreasesToday': 0,
+        #       u'WriteCapacityUnits': 1,
+        #       u'LastIncreaseDateTime': 0.0,
+        #       u'ReadCapacityUnits': 1,
+        #       u'LastDecreaseDateTime': 0.0
+        #     },
+        #     u'TableSizeBytes': 0,
+        #     u'TableName': u'Music',
+        #     u'TableStatus': u'ACTIVE',
+        #     u'KeySchema': [
+        #       {
+        #         u'KeyType': u'HASH',
+        #         u'AttributeName': u'Artist'
+        #       },
+        #       {
+        #         u'KeyType': u'RANGE',
+        #         u'AttributeName': u'SongTitle'
+        #       }
+        #     ],
+        #     u'ItemCount': 0,
+        #     u'CreationDateTime': 1486632404.093
+        #   }
+        # }
+print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+# Put item
+def put_item():
+    print '********** put_item'
+    # [1]
+    r = conn.put_item(
+        table_name='Music',
+        item={
+            "Artist": "Artist: test",
+            "SongTitle": "Title: test",
+        }
+    )
+    print r  # {}
+    # [2]
+    import random
+    artist = ''.join(random.sample('ABCDEFGHIJKLMNOPQRSTUVWXYZ', 1)) + \
+           (''.join(random.sample('ABCDEFGHIJKLMNOPQRSTUVWXYZ', 4))).lower()
+    songtitle = ''.join(random.sample('ABCDEFGHIJKLMNOPQRSTUVWXYZ', 1)) + \
+             (''.join(random.sample('ABCDEFGHIJKLMNOPQRSTUVWXYZ', 4))).lower()
+    item = {
+        "Artist": artist,
+        "SongTitle": songtitle
+    }
+    r = conn.put_item(
+        table_name='Music',
+        item=item
+    )
+    print r  # {}
+print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
+# Get item
+def get_item():
+    print '********** get_item'
+    r = conn.get_item(
+        table_name='Music',
+        key={
+            "Artist": "Artist: test",
+            "SongTitle": "Title: test",
+        }
+    )
+    print r
+    # {
+    #   u'Item': {
+    #     u'SongTitle': {
+    #       u'S': u'Title: test'
+    #     },
+    #     u'Artist': {
+    #       u'S': u'Artist: test'
+    #     }
+    #   }
+    # }
 print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
 print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-print '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'
-
+create_table()
+describe_table()
+put_item()
+get_item()
+delete_table()
