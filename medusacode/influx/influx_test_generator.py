@@ -64,6 +64,7 @@ class InfluxDBGenerator(object):
             # query="select * from measurement_name where host = 'host_01' ",
         )
         print ret
+        print ret.raw
 
 if __name__ == '__main__':
     ig = InfluxDBGenerator()
