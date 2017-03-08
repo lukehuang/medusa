@@ -24,14 +24,25 @@ import datetime
 from influxdb import InfluxDBClient
 
 
+HOST = '192.168.100.100'
+PORT = 8086
+USERNAME = 'root'
+PASSWORD = 'root',
+
+
 class InfluxDBGenerator(object):
     def __init__(self):
         self.idb_client = InfluxDBClient(
-            host='192.168.100.100',
-            port=8086,
-            username='root',
-            password='root',
+            host=HOST,
+            port=PORT,
+            username=USERNAME,
+            password=PASSWORD,
         )
+
+    def get_info(self):
+        ret = self.idb_client.get_list_database()
+        print ret
+        # [{u'name': u'_internal'}, {u'name': u'demo'}]
 
     def gen_data(self):
         json_body = [
@@ -68,5 +79,6 @@ class InfluxDBGenerator(object):
 
 if __name__ == '__main__':
     ig = InfluxDBGenerator()
+    ig.get_info()
     ig.gen_data()
     ig.query_data()
