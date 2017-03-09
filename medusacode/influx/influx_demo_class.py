@@ -39,6 +39,11 @@ class InfluxDBGenerator(object):
             port=PORT,
             username=USERNAME,
             password=PASSWORD,
+            # use HTTP POST (requests)
+            # use_udp=False,
+            # use UDP to connect to InfluxDB
+            # use_udp=True,
+            # udp_port=4444,
         )
 
     def create_database(self):
