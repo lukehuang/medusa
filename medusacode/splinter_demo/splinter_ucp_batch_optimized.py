@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding:utf-8
 
+import time
 from splinter import Browser
 
 URL_UCAMPUS = 'http://rmdx.testucampus.unipus.cn'
@@ -26,7 +27,6 @@ for info in data:
     btn_login = browser.find_by_id("login")
     btn_login.click()
 
-    import time
     time.sleep(1)
 
     browser.visit(URL_UCAMPUS_BIND)
