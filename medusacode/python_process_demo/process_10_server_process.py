@@ -65,16 +65,17 @@ process_1.start()
 process_2.start()
 process_1.join()
 process_2.join()
-# ..........(worker start) [worker](pid:3222 ppid:3220)
-# [69]
-# {'u': 82}
-# ..........(worker stop) [worker](pid:3222 ppid:3220)
-# ..........(worker start) [worker](pid:3223 ppid:3220)
-# [69, 22]
-# {'r': 79, 'u': 82}
-# ..........(worker stop) [worker](pid:3223 ppid:3220)
+# ..........(worker start) [worker](pid:5303 ppid:5301)
+# [36]
+# {'m': 2}
+# ..........(worker stop) [worker](pid:5303 ppid:5301)
+# ..........(worker start) [worker](pid:5304 ppid:5301)
+# [36, 75]
+# {'k': 66, 'm': 2}
+# ..........(worker stop) [worker](pid:5304 ppid:5301)
 
 print proxy_list
 print proxy_dict
-# [13, 44]
-# {'l': 52, 'v': 88}
+#
+# [36, 75]
+# {'k': 66, 'm': 2}
