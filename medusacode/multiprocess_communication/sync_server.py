@@ -2,12 +2,12 @@
 # coding:utf-8
 
 
-from multiprocessing.managers import BaseManager
+from multiprocessing.managers import BaseManager, SyncManager
 
 cache_dict = {}
 
-BaseManager.register('get_cache', callable=lambda: cache_dict)
-manager = BaseManager(
+SyncManager.register('get_cache', callable=lambda: cache_dict)
+manager = SyncManager(
     address=('0.0.0.0', 8888),
     authkey='course_cache'
 )
