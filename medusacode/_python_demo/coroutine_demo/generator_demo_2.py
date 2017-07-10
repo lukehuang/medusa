@@ -59,7 +59,17 @@ def generator_function(value=None):
         print 'do not forget to call close()'
 
 
+print type(generator_function)
+# <type 'function'>
+print generator_function
+# <function generator_function at 0x10491f0c8>
+
 generator = generator_function(1)
+print type(generator)
+# <type 'generator'>
+print generator
+# <generator object generator_function at 0x109372dc0>
+
 print generator.next()
 # next() is called for the first time
 # 1
