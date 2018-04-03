@@ -7,7 +7,7 @@ def decorator_maker():
 
     print "I am a decorator_maker! I am executed only once: when you make me create a decorator."
 
-    def my_decorator(func):
+    def my_decorator(func):  # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
         print "I am a decorator! I am executed only when you decorate a function."
 
