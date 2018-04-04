@@ -19,7 +19,11 @@ from django.contrib import admin
 
 # ----------------------------------------------------------------------------------------------------
 # Django admin
-
+"""
+Username (leave blank to use 'root'): admin
+Password: damin
+Email address: admin@163.com
+"""
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
 ]
