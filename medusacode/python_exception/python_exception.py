@@ -23,3 +23,13 @@ except Exception, e:
     import traceback
     traceback.print_exc()
 print '---------------------------------------------------------------------------'
+"""
+[3] 可以打印: 异常信息、异常文件、所在代码等 (返回字符串)
+"""
+try:
+    x = 1/0
+except Exception, e:
+    import traceback
+    tb = traceback.format_exc()
+    print tb
+print '---------------------------------------------------------------------------'
