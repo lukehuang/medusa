@@ -30,8 +30,12 @@ def timeit(func):
 print '--------------------------------------------------------------------------------'
 
 
+@timeit
+def work():
+    print 'work start'
+    time.sleep(1)
+    print 'work stop'
+    return
 
 
-
-
-
+work()
