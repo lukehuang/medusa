@@ -2,7 +2,9 @@
 # coding:utf-8
 
 """
+对象: 关联了方法的数据
 objects are data with methods attached;
+闭包: 关联了数据的方法
 closures are functions with data attached;
 """
 """
