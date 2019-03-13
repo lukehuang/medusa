@@ -24,11 +24,11 @@ object.__get__(self, instance, owner)
 """
 每次通过实例访问属性，都会经过__getattribute__函数。
 当属性不存在时，仍然需要访问__getattribute__，不过接着要访问__getattr__。这就好像是一个异常处理函数。
-每次访问descriptor（即实现了__get__的类），都会先经过__get__函数。
+每次访问descriptor（即实现了__get__方法的类），都会先经过__get__函数。
 
 注意:
-    当使用类访问不存在的属性时，不会经过__getattr__函数。
-    当使用实例访问不存在的属性时，会经过__getattr__函数。
+    当使用 [类]  访问不存在的属性时，不会经过__getattr__函数。
+    当使用 [实例] 访问不存在的属性时，会经过__getattr__函数。
     而descriptor不存在此问题，只是把instance标识为none而已。
 """
 """
