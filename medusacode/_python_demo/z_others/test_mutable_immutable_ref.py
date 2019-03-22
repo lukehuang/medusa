@@ -2,8 +2,12 @@
 # coding:utf-8
 
 """
-可变对象(mutable): list, dict, set
-不可变对象(immutable): tuple, frozenset
+可变对象(mutable):
+    list, dict, set
+不可变对象(immutable):
+    tuple, frozenset
+    str, int, flost, long, complex
+    bool(True:1 False:0)
 
 Python 函数参数:
 对于可变对象，函数内对参数的改变会影响到原始对象；
