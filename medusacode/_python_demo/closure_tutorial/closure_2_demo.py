@@ -2,6 +2,10 @@
 # coding:utf-8
 
 """
+闭包:
+    关联了外部作用域变量的函数。
+"""
+"""
 A closure is a function that references variables from a containing scope,
 potentially after flow-of-control has left that scope. (That last bit is very useful)
 """
